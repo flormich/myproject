@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.js"></script>
+
+        <title>{% block title %}Site de Maman{% endblock %}</title>
+        <base href="{{ asset('') }}">
+
+        {% block stylesheets %}
+            <link rel="stylesheet" type="text/css" href="build/app.css"/>
+        {% endblock %}
+    </head>
+    <body id="{% block body %}{% endblock %}">
+        
+        <header class="row">
+            {% block header %} {% endblock %}
+        </header>
+
+        <main class="row">
+            {% block main %} {% endblock %}
+        </main>
+
+        <footer class="row">
+            {% block footer %} {% endblock %}
+        </footer>
+
+        {% block javascripts %}
+            <script type="text/javascript" src="index.js"></script>
+        {% endblock %}
+    </body>
+</html>

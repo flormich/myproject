@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Aa {% endblock %}
+
+{% block body_id %}app{% endblock %}
+
+{% block header %}
+
+    {# {% include 'shared/_header.html.twig' %} #}
+{% endblock %}
+
+{% block main %}
+    {% include 'baseOpen.html.php' %}
+    {# Corp de la page d'accueil #}
+    <div class="backgroundCreate heightMoy">
+        <br><center>
+        <h3><b><u>Utilisateurs</u></b></h3>
+        <br>
+    </div>
+
+    <div class="backgroundCreate">
+        <section class="paragraphe subtitle read ">
+            <table class="tableauReadScrap backgroundWhite" style="border-collapse:collapse">                
+                <tbody class="pointerRead">
+                    <tr class="textShadow borderTableauUsers textTitleUsers">
+                        <td rowspan="2" class="borderTrue widthColonneUsers">Numéro id</td>
+                        {# <td rowspan="2" class="borderTrue widthColonneUsers">Pseudo</td> #}
+                        {# <td rowspan="2" class="borderTrue widthColonneUsers">Prénom</td> #}
+                        {# <td rowspan="2" class="borderTrue widthColonneUsers">Nom</td> #}
+                        <td rowspan="2" class="borderTrue widthColonneUsers">Email</td>
+                        {# <td rowspan="2" class="borderTrue widthColonneUsers">Mdp</td> #}
+                        <td rowspan="2" class="borderTrue widthColonneUsers">Role</td>
+                        {# <td colspan="2" class="borderTrue widthColonneIconeUsers">Action</td> #}
+                    </tr>
+                    <tr class="textShadow borderTableauUsers">
+                        {# <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td> #}
+                    </tr>
+                {% for users in user %}
+                    <tr class="textShadow borderTableauUsers textTableauUsers">
+                        <td class=" borderTrue"><a class="textDecoration">{{ user.id }}</a></td>   
+                        {# <td class=" borderTrue">{{ user.UserName }}</td> #}
+                        {# <td class=" borderTrue">{{ user.FirstName }}</td> #}
+                        {# <td class=" borderTrue">{{ user.LastName }}</td> #}
+                        <td class=" borderTrue">{{ user.email }}</td>  
+                        {# <td class=" borderTrue">{{ user.password }}</td>   #}
+                        <td class=" borderTrue">{{ user.RoleUser.NameRole }}</td>  
+                        <td class=" "><img src="../assets/images/icones/pen.png" alt="Update" width="25%" title="Modification"></td>  
+                        <td class=" "><img src="../assets/images/icones/trash.png" alt="Trash" width="25%" title="Suppression"></td>  
+                        {# <td class="borderTrueTopLeftRight espaceTopBottom titleCenter" onclick="document.location='{{ path('readscrapdetail', {'id':scraps.id}) }}">{{ scraps.titre }}</td>   #}
+                    </tr>
+                {% endfor %}
+                </tbody>                    
+            </table>
+            <br>
+            {% include 'footer.html.php' %}
+        </section>
+    </div>
+{% endblock %} 
