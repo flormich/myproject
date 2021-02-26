@@ -6,6 +6,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+include __DIR__ . '/../../assets/variable.php';
+
 class EssaiController extends AbstractController
 {
     /**
@@ -21,12 +23,12 @@ class EssaiController extends AbstractController
     }
 
     /**
-     * @Route ("/index", name="index")
+     * @Route ("/", name="index")
      */
     public function index(): Response
     {
         return $this->render('index.html.twig', [
-            'titreSite' => 'Ici le titre',
+            'titreSite' => $_SESSION['titre'],
             'text' => 'Ici un text',
         ]);
     }

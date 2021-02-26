@@ -1,8 +1,10 @@
-{# {% extends 'base.html.twig' %} #}
+{% extends 'base.html.twig' %}
 
-{% block title %} Register {% endblock %}
+{# {% block title %} Register {% endblock %} #}
+{% block title %} {{ titreSite }} {% endblock %}
 
 {% block body %}
+    {% include 'baseOpen.html.php' %}
     {% for flashError in app.flashes('verify_email_error') %}
         <div class="alert alert-danger" role="alert">{{ flashError }}</div>
     {% endfor %}
@@ -20,4 +22,5 @@
 
         <button class="btn" type="submit">Enregistrer</button>
     {{ form_end(registrationForm) }}
+    {% include 'footer.html.php' %}
 {% endblock %}

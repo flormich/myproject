@@ -1,11 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %} Aa {% endblock %}
+{# {% block title %} {{ titreSite }} {% endblock %} #}
+{% block title %} Read {% endblock %}
 
 {% block body_id %}app{% endblock %}
 
 {% block header %}
-
     {# {% include 'shared/_header.html.twig' %} #}
 {% endblock %}
 
@@ -23,13 +23,14 @@
             <table class="tableauReadScrap backgroundWhite" style="border-collapse:collapse">                
                 <tbody class="pointerRead">
                     <tr class="textShadow borderTableauUsers textTitleUsers">
-                        <td rowspan="2" class="borderTrue widthColonneUsers">Numéro id</td>
+                        <td rowspan="2" class="borderTrue widthColonneUsers">Num. id</td>
                         {# <td rowspan="2" class="borderTrue widthColonneUsers">Pseudo</td> #}
                         {# <td rowspan="2" class="borderTrue widthColonneUsers">Prénom</td> #}
                         {# <td rowspan="2" class="borderTrue widthColonneUsers">Nom</td> #}
                         <td rowspan="2" class="borderTrue widthColonneUsers">Email</td>
                         {# <td rowspan="2" class="borderTrue widthColonneUsers">Mdp</td> #}
-                        <td rowspan="2" class="borderTrue widthColonneUsers">Role</td>
+                        {# <td rowspan="2" class="borderTrue widthColonneUsers">Role</td> #}
+                        <td rowspan="2" class="borderTrue widthColonneUsers">Interagir</td>
                         {# <td colspan="2" class="borderTrue widthColonneIconeUsers">Action</td> #}
                     </tr>
                     <tr class="textShadow borderTableauUsers">
@@ -42,13 +43,13 @@
                     </tr>
                 {% for users in user %}
                     <tr class="textShadow borderTableauUsers textTableauUsers">
-                        <td class=" borderTrue"><a class="textDecoration">{{ user.id }}</a></td>   
+                        <td class=" borderTrue"><a class="textDecoration">{{ users.id }}</a></td>   
                         {# <td class=" borderTrue">{{ user.UserName }}</td> #}
                         {# <td class=" borderTrue">{{ user.FirstName }}</td> #}
                         {# <td class=" borderTrue">{{ user.LastName }}</td> #}
-                        <td class=" borderTrue">{{ user.email }}</td>  
+                        <td class=" borderTrue">{{ users.email }}</td>  
                         {# <td class=" borderTrue">{{ user.password }}</td>   #}
-                        <td class=" borderTrue">{{ user.RoleUser.NameRole }}</td>  
+                        {# <td class=" borderTrue">{{ user.RoleUser.NameRole }}</td>   #}
                         <td class=" "><img src="../assets/images/icones/pen.png" alt="Update" width="25%" title="Modification"></td>  
                         <td class=" "><img src="../assets/images/icones/trash.png" alt="Trash" width="25%" title="Suppression"></td>  
                         {# <td class="borderTrueTopLeftRight espaceTopBottom titleCenter" onclick="document.location='{{ path('readscrapdetail', {'id':scraps.id}) }}">{{ scraps.titre }}</td>   #}

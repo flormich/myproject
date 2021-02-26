@@ -17,6 +17,10 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+
+// include __DIR__ . '/../../assets/variable.php';
+
 class RegistrationController extends AbstractController
 {
     private $emailVerifier;
@@ -58,11 +62,12 @@ class RegistrationController extends AbstractController
             // );
             // // do anything else you need here, like send an email
 
-            return $this->redirectToRoute('index');
+            return $this->redirectToRoute('app_login');
         }
 
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $form->createView(),
+            'titreSite' => $_SESSION['titre'],
         ]);
     }
 

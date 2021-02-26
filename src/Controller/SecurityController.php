@@ -7,6 +7,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
+// include __DIR__ . '/../../assets/variable.php';
+
 class SecurityController extends AbstractController
 {
     /**
@@ -25,6 +27,7 @@ class SecurityController extends AbstractController
 
         return $this->render('security/login.html.twig', [
             'last_username' => $lastUsername, 
+            'titreSite' => $_SESSION['titre'],
             'error' => $error]);
     }
 

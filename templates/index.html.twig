@@ -13,20 +13,18 @@
 {% block main %}
     {% include 'baseOpen.html.php' %}
     {# Corp de la page d'accueil #}
-        <div class="backgroundCreate heightMoy">
-            <br><br><center>
-                <h3><b><u>Actualités</u></b></h3>
-                <h3><b><u> {{ text }} </u></b></h3>
-                <br>
-                <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--myColorValidate bigButton" type="submit">
-                    <a href="readStore" style="color:white; text-decoration:none">Voir produit</a>
-                </button>
-                <br><br>
-                <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--myColorValidate middleButton" type="submit">
-                    <a href="createStore" style="color:white; text-decoration:none">Ajouter produit</a>
-                </button>
-        </div>
-
+    <div class="backgroundCreate heightMoy">
+        <br><br><center>
+        <h3><b><u>Actualités</u></b></h3>
+        <h3><b><u> {{ text }} </u></b></h3>
+        <br>
+        <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--myColorValidate bigButton" type="submit">
+            <a href="readStore" style="color:white; text-decoration:none">Voir produit</a>
+        </button>
+        <br><br>
+        <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--myColorValidate middleButton" type="submit">
+            <a href="createStore" style="color:white; text-decoration:none">Ajouter produit</a>
+        </button>
+    </div>
     {% include 'footer.html.php' %}
-
 {% endblock %}
