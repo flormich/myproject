@@ -27,9 +27,27 @@ class UserController extends AbstractController
     public function ReadAllUsers(Request $request): Response
     {
         $user = $this->getDoctrine()->getManager()->getRepository(Users::class)->findAll();
+        $userCourant = $this->getUser()->getEmail();
         return $this->render('users/readUser.html.twig', [
             // 'titreSite' => $_SESSION['titre'],
             'user' => $user,
+            'userCourant' => $userCourant,
         ]);
+    }
+
+    /**
+     * @Route("/updateUser/{id}", name="update_user")
+     */
+    public function UpdateUsers(Request $request): Response
+    {
+
+    }
+
+    /**
+     * @Route("/deleteUser/{id}", name="delete_user")
+     */
+    public function DeleteUsers(Request $request): Response
+    {
+        
     }
 }

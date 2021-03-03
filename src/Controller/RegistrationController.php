@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Users;
+use App\Entity\Roles;
 
 use App\Form\RegistrationFormType;
 
@@ -41,12 +42,17 @@ class RegistrationController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             // encode the plain password
-            $user->setPassword(
-                $passwordEncoder->encodePassword(
-                    $user,
-                    $form->get('plainPassword')->getData()
-                )
-            );
+            $user
+                // ->setRole('user')
+                ->setDateCreate(new \DateTime())
+                ->setDateConnect(new \DateTime())
+                ->setPassword(
+                    $passwordEncoder->encodePassword(
+                            $user,
+                            // $form->get('plainPassword')->getData()
+                            $form->get('password')->getData()
+                        )
+                    ); 
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);

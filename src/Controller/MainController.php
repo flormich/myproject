@@ -11,7 +11,7 @@ include __DIR__ . '/../../assets/variable.php';
 class MainController extends AbstractController
 {
     /**
-     * @Route("/index", name="app_home")
+     * @Route("/", name="app_home")
      */
     public function index(): Response
     {

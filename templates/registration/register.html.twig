@@ -3,7 +3,9 @@
 {# {% block title %} Register {% endblock %} #}
 {% block title %} {{ titreSite }} {% endblock %}
 
-{% block body %}
+{% block body_id %}app{% endblock %}
+
+{% block main %}
     {% include 'baseOpen.html.php' %}
     {% for flashError in app.flashes('verify_email_error') %}
         <div class="alert alert-danger" role="alert">{{ flashError }}</div>
@@ -11,14 +13,31 @@
 
     <h1>Page d'enregistrement</h1>
 
+
     {{ form_start(registrationForm) }}
+        {{ form_row(registrationForm.username, {
+            label: 'Pseudo : '
+        }) }}
+        {{ form_row(registrationForm.firstname, {
+            label: 'Prénom : '
+        })}}
+        {{ form_row(registrationForm.name, {
+            label: 'Nom : '
+        })}}
         {{ form_row(registrationForm.email, {
             label: 'Email : '
         }) }}
-        {{ form_row(registrationForm.plainPassword, {
+        <br>
+        {# {{ form_row(registrationForm.plainPassword, {
             label: 'Password : '
+        }) }} #}
+        {{ form_row(registrationForm.password) }}
+        {{ form_row(registrationForm.role, {
+            label: 'Role : ',
+            value: "2",
         }) }}
-        {# {{ form_row(registrationForm.agreeTerms) }} #}
+        {{ form_row(registrationForm.agreeTerms) }}
+
 
         <button class="btn" type="submit">Enregistrer</button>
     {{ form_end(registrationForm) }}
