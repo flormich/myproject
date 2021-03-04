@@ -73,12 +73,13 @@
                         {% endif %}
 
                         {% if not app.user %}
+                            Je suis annonyme
                         {% else %}
                             {% if (app.user.role.id == "1") %}
                                 {{ dump(app.user) }}
                                 Je suis Admin
                                 {{ dump(app.user.username) }}
-                                {{ dump(app.user.role.id)}}
+                                {{ dump(app.user.role.name)}}
                                 <a class="menuLeft menuviewusers" href="{{ path('add_article') }}"><img src="../assets/images/icones/users.png" width="20%" title="Ajout article" text-align="center">Ajout Article</a>
                                 <a class="menuLeft menuviewusers" href="{{ path('all_users') }}"><img src="../assets/images/icones/users.png" width="20%" title="Utilisateur" text-align="center">Utilisateurs</a>
                             {% else %}
@@ -86,7 +87,8 @@
                                 {{ dump(app.user.firstname)}}
                                 {{ dump(app.user.email)}}
                                 {{ dump(app.user.datecreate)}}
-                                Je ne suis pas admin
+                                {{ dump(app.user.role.name)}}
+                                Je suis user
                             {% endif %}
                         {% endif %}                       
                     </nav>

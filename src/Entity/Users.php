@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Roles;
 use App\Repository\UsersRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -242,6 +243,18 @@ class Users implements UserInterface
     {
         $this->dateConnect = $dateConnect;
 
+        return $this;
+    }
+
+
+    public function initRole($em) {
+ 
+     
+        // Initialise le role par defaut (identifiant 1 en bdd)
+        $role = $em->getRepository(Roles::class)->find(2);
+        $this->role = $role;
+     
+        // Retourne l'instance de l'objet (fluent)
         return $this;
     }
 }
