@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Ajout article {% endblock %}
+{# {% block title %} {{ titreSite }} {% endblock %} #}
+
+{% block body_id %}app{% endblock %}
+
+{% block main %}
+    {% include 'baseOpen.html.php' %}
+    <center>
+    <h1>Ajouter un article</h1>
+
+    {{ form_start(addArticleForm)}}
+        {{ form_row(addArticleForm.title, {
+            label: 'Titre : '
+        })}}
+        {{ form_row(addArticleForm.description, {
+            label: 'Descriptoin : '
+        })}}
+        {{ form_row(addArticleForm.picture, {
+            label: 'Photos :'
+        })}}
+        {# {{ form_row(addArticleForm.themes, {
+            label: 'Themes :',
+            value: 'name',
+        })}}
+        {{ form_row(addArticleForm.keyWords, {
+            label: 'Keys : ',
+            value: 'name',
+        })}} #}
+        <br>
+
+   
+
+
+        <button class="btn" type="submit">Enregistrer</button>
+    {{ form_end(addArticleForm) }}
+    {% include 'footer.html.php' %}
+{% endblock %}

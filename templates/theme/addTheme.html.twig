@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Ajout de theme {% endblock %}
+{# {% block title %} {{ titreSite }} {% endblock %} #}
+
+{% block body_id %}app{% endblock %}
+
+{% block main %}
+    {% include 'baseOpen.html.php' %}
+    <center>
+    <h1>Ajouter un theme</h1>
+
+    {# {{ form_start(addThemeForm)}}
+        {{ form_row(addThemeForm.name, {
+            label: 'Nom : '
+        })}} #}
+
+        <br>
+        <button class="btn" type="submit">Enregistrer</button>
+    {# {{ form_end(addThemeForm) }} #}
+    {% include 'footer.html.php' %}
+{% endblock %}

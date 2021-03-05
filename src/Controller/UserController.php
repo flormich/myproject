@@ -36,6 +36,34 @@ class UserController extends AbstractController
     }
 
     /**
+     * @Route("/showAllSortUserName", name="showArtSortNom")
+     */
+    public function ShowAllUserSortNom(Request $request): Response
+    {
+        $user = $this->getDoctrine()->getManager()->getRepository(Users::class)->findBy([],['name' => 'ASC']);
+        $userCourant = $this->getUser()->getEmail();
+        return $this->render('users/readUser.html.twig', [
+            // 'titreSite' => $_SESSION['titre'],
+            'user' => $user,
+            'userCourant' => $userCourant,
+        ]);
+    }
+
+    /**
+     * @Route("/showAllSortUserPrenom", name="showArtSortPrenom")
+     */
+    public function ShowAllUserSortPrenom(Request $request): Response
+    {
+        $user = $this->getDoctrine()->getManager()->getRepository(Users::class)->findBy([],['firstname' => 'ASC']);
+        $userCourant = $this->getUser()->getEmail();
+        return $this->render('users/readUser.html.twig', [
+            // 'titreSite' => $_SESSION['titre'],
+            'user' => $user,
+            'userCourant' => $userCourant,
+        ]);
+    }
+
+    /**
      * @Route("/updateUser/{id}", name="update_user")
      */
     public function UpdateUsers(Request $request): Response
@@ -46,8 +74,12 @@ class UserController extends AbstractController
     /**
      * @Route("/deleteUser/{id}", name="delete_user")
      */
-    public function DeleteUsers(Request $request): Response
+    public function DeleteUsers(Users $user, Request $request): Response
     {
-        
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($user);
+        $em->flush();
+
+        return $this->redirectToRoute('all_users');
     }
 }

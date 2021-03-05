@@ -32,7 +32,7 @@
                     <!-- Title -->
                     <!-- Menu du haut -->
                     <span class="mdl-layout-title">
-                        <a class="mdl-navigation__link" href="{{ path('app_home') }}">&nbsp;<img src="../assets/images/icones/news.png" alt="Actualités" width="40%" title="Actualités"></a>
+                        <a class="mdl-navigation__link" href="{{ path('show_all_article') }}">&nbsp;<img src="../assets/images/icones/news.png" alt="Actualités" width="40%" title="Actualités"></a>
                     </span>
                     <!-- Add spacer, to align navigation to the right -->
 
@@ -49,7 +49,7 @@
                             <a class="menuLeft menuconnexion" href="{{ path('app_login') }}"><img src="../assets/images/icones/login.png" width="20%" title="Connexion" text-align="center"></a>
                         {% else %}
                             {# <a class="mdl-navigation__link bandoIconeStoreProduct" href="#"><img src="../assets/images/icones/shopping.png" width="40%" title="Calendrier" text-align="center"> </a> #}
-                            <a class="mdl-navigation__link bandoIconeStoreProduct" href="{{ path('app_home') }}"><img src="../assets/images/icones/shopping.png" width="40%" title="Commander" text-align="center"> </a>
+                            {# <a class="mdl-navigation__link bandoIconeStoreProduct" href="{{ path('app_home') }}"><img src="../assets/images/icones/shopping.png" width="40%" title="Commander" text-align="center"> </a> #}
                             <a class="mdl-navigation__link bandoIconeStoreProduct" href="{{ path('app_logout') }}"><img src="../assets/images/icones/shopping.png" width="40%" title="Déconnexion" text-align="center"> </a>
                         {% endif %}
 
@@ -62,13 +62,13 @@
                     <span class="mdl-layout-title">
                     </span>
                     <nav class="mdl-navigation menuLeft">
-                        <a class="menuLeft" href="{{ path('app_home') }}"><img src="../assets/images/icones/news.png" width="20%" title="Actualités">Actualités</a>
+                        <a class="menuLeft" href="{{ path('show_all_article') }}"><img src="../assets/images/icones/news.png" width="20%" title="Actualités">Actualités</a>
                         <hr color="blue" size="10px">
                         {% if not app.user %}
                             <a class="menuLeft menuconnexion" href="{{ path('app_register') }}"><img src="../assets/images/icones/login.png" width="20%" title="Register" text-align="center">Register</a>
                         {% else %}
                             {# <a class="menuLeft" href="#"><img src="../assets/images/icones/shopping.png" width="40%" title="Calendrier" text-align="center">Calendrier</a> #}
-                            <a class="menuLeft " href="readOrder"><img src="../assets/images/icones/shopping.png" width="20%" title="Commander">Commander</a>
+                            {# <a class="menuLeft " href="readOrder"><img src="../assets/images/icones/shopping.png" width="20%" title="Commander">Commander</a> #}
                             <hr class="barreconnexion" color="blue" size="10px">
                         {% endif %}
 
@@ -81,6 +81,7 @@
                                 {{ dump(app.user.username) }}
                                 {{ dump(app.user.role.name)}}
                                 <a class="menuLeft menuviewusers" href="{{ path('add_article') }}"><img src="../assets/images/icones/users.png" width="20%" title="Ajout article" text-align="center">Ajout Article</a>
+                                <a class="menuLeft menuviewusers" href="{{ path('add_theme') }}"><img src="../assets/images/icones/users.png" width="20%" title="Ajout thème" text-align="center">Ajout Thème</a>
                                 <a class="menuLeft menuviewusers" href="{{ path('all_users') }}"><img src="../assets/images/icones/users.png" width="20%" title="Utilisateur" text-align="center">Utilisateurs</a>
                             {% else %}
                                 {{ dump(app.user) }}

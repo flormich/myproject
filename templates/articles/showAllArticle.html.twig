@@ -1,0 +1,81 @@
+{% extends 'base.html.twig' %}
+{% block title %} Montrer Articles {% endblock %}
+{% block body_id %} app {% endblock %}
+{% block header %}
+    {# {% include 'shared/_header.html.twig' %} #}
+{% endblock %}
+
+{% block main %}
+    {% include 'baseOpen.html.php' %}
+        {# Corp de la page d'articles #}
+    <div class="backgroundCreate heightMoy">
+        <br><center>
+        <h3><b><u>Articles</u></b></h3>
+        {% if not app.user %}
+        {% else %}
+            {% if (app.user.role.id == "1") %}
+            <a href="{{ path('manage_articles') }}"> <input type="button" value="Mettre en liste"> </a>
+            <br><br>
+            {% else %}
+            {% endif %}
+        {% endif %}
+    </div>
+       <div class="backgroundCreate">
+        <section class="paragraphe subtitle read ">
+            <center>
+            <table class="tableauReadScrap backgroundWhite" style="border-collapse:collapse; text-align:center; margin:auto">                
+                <tbody class="pointerRead">
+                        <tr class="textShadow borderTableauUsers textTableauUsers" style="text-align:center">
+                    {% for article in articles %}
+                        {% if ((article.id)%3 == 0) %}
+                        </tr><tr>
+                            <td style="height:50px"></td>
+                        </tr><tr class="textShadow borderTableauUsers textTableauUsers" style="text-align:center">
+                            <td class=" borderTrue" style="border: 1px solid black; width:300px; height:300px">
+                                {{ article.title }}
+                                <br>
+                                {{ article.picture }}
+                            </td>
+                            <td style="width:50px"></td>
+                        {% else %}
+                            <td class=" borderTrue" style="border: 1px solid black; width:300px; height:300px">
+                                {{ article.title }}
+                                <br>
+                                {{ article.picture }}
+                            </td>     
+                            <td style="width:50px"></td>                       
+                        {% endif %}
+                    {% endfor %}
+
+                {# {% for i in 0..18 %}
+        {% for article in articles %}
+                {% if (i%3 == 0) %}
+                        <td class=" borderTrue" style="border: 1px solid black; width:50px">
+                            {{ article.title }}
+                            <br>
+                            {{ article.picture }}
+                        </td>
+                        <td style="width:30px"></tSd>
+       
+        {% else %}
+                    {{ i }}
+                    </tr><br><tr>
+                    </tr><td class=" borderTrue" style="border: 1px solid black; width:50px">
+                            {{ article.title }}
+                            <br>
+                            {{ article.picture }}
+                        </td>
+                        <td style="width:30px"></tSd><tr>
+        {% endif %}
+                         {% endfor %}
+        {% endfor %} #}
+                    </tr>
+ 
+                </tbody>                    
+            </table>
+            <br>
+        <br>
+        {% include 'footer.html.php' %}
+        </section>
+    </div>
+{% endblock %} 

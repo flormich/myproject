@@ -12,26 +12,30 @@
 {% block main %}
     {% include 'baseOpen.html.php' %}
     {# Corp de la page d'accueil #}
+    
     <div class="backgroundCreate heightMoy">
         <br><center>
-        <h3><b><u>Utilisateurs</u></b></h3>
+        <h3><b><u>Tous les Utilisateurs</u></b></h3>
         <h4>{{ userCourant }}<h4>
         <br>
     </div>
 
-    <div class="backgroundCreate">
+
+    <div class="backgroundCreate" style="text-align:center; margin:auto">
         <section class="paragraphe subtitle read ">
-            <table class="tableauReadScrap backgroundWhite" style="border-collapse:collapse">                
+        <center>
+            <table class="tableauReadScrap backgroundWhite" style="border-collapse:collapse; border:solid 1px black">                
                 <tbody class="pointerRead">
-                    <tr class="textShadow borderTableauUsers textTitleUsers">
-                        <td rowspan="2" class="borderTrue widthColonneUsers">Num. id</td>
-                        <td rowspan="2" class="borderTrue widthColonneUsers">Pseudo</td>
-                        <td rowspan="2" class="borderTrue widthColonneUsers">Prénom</td>
-                        <td rowspan="2" class="borderTrue widthColonneUsers">Nom</td>
-                        <td rowspan="2" class="borderTrue widthColonneUsers">Email</td>
+                    <tr class="textShadow borderTableauUsers textTitleUsers borderTrue">
+                        <th rowspan="2" class="borderTrue widthColonneUsers" style="border: solid 1px black; text-align:center; height:50px; width:130px">Num. id</th>
+                        <th rowspan="2" class="borderTrue widthColonneUsers" style="border: solid 1px black;text-align:center; width:13px">Pseudo</th>
+                        <th rowspan="2" class="borderTrue widthColonneUsers" style="border: solid 1px black; text-align:center; width:130px"><a href="{{ path('showArtSortPrenom') }}">Prénom</a></th>
+                        <th rowspan="2" class="borderTrue widthColonneUsers" style="border: solid 1px black; text-align:center; width:130px"><a href="{{ path('showArtSortNom') }}">Nom</a></th>
+                        <th rowspan="2" class="borderTrue widthColonneUsers" style="border: solid 1px black; text-align:center; width:130px">Email</th>
+                        <th rowspan="2" class="borderTrue widthColonneUsers" style="border: solid 1px black; text-align:center; width:130px">Date Create</th>
                         {# <td rowspan="2" class="borderTrue widthColonneUsers">Mdp</td> #}
-                        <td rowspan="2" class="borderTrue widthColonneUsers">Role</td>
-                        <td rowspan="2" class="borderTrue widthColonneUsers">Interagir</td>
+                        <th rowspan="2" class="borderTrue widthColonneUsers" style="border: solid 1px black; text-align:center; width:130px">Role</th>
+                        <th colspan="2" class="borderTrue widthColonneUsers" style="border: solid 1px black; text-align:center">Interagir</th>
                         {# <td colspan="2" class="borderTrue widthColonneIconeUsers">Action</td> #}
                     </tr>
                     <tr class="textShadow borderTableauUsers">
@@ -44,15 +48,16 @@
                     </tr>
                 {% for users in user %}
                     <tr class="textShadow borderTableauUsers textTableauUsers">
-                        <td class=" borderTrue"><a class="textDecoration">{{ users.id }}</a></td>   
-                        <td class=" borderTrue">{{ users.pseudo }}</td>
-                        <td class=" borderTrue">{{ users.firstname }}</td>
-                        <td class=" borderTrue">{{ users.name }}</td>
-                        <td class=" borderTrue">{{ users.email }}</td>  
+                        <td class=" borderTrue" style="border: solid 1px black; text-align:center; height:50px; width:100px"><a class="textDecoration">{{ users.id }}</a></td>   
+                        <td class=" borderTrue" style="border: solid 1px black; text-align:center;">{{ users.pseudo }}</td>
+                        <td class=" borderTrue" style="border: solid 1px black; text-align:center">{{ users.firstname }}</td>
+                        <td class=" borderTrue" style="border: solid 1px black; text-align:center">{{ users.name }}</td>
+                        <td class=" borderTrue" style="border: solid 1px black; text-align:center">{{ users.email }}</td>  
+                        <td class=" borderTrue" style="border: solid 1px black; text-align:center">{{ users.datecreate | date('d/m/Y') }}</td>  
                         {# <td class=" borderTrue">{{ user.password }}</td>   #}
-                        <td class=" borderTrue">{{ users.Role.name }}</td>  
-                        <td class=" "><img src="../assets/images/icones/pen.png" alt="Update" width="25%" title="Modification"></td>  
-                        <td class=" "><img src="../assets/images/icones/trash.png" alt="Trash" width="25%" title="Suppression"></td>  
+                        <td class=" borderTrue" style="border: solid 1px black; text-align:center">{{ users.Role.name }}</td>  
+                        <td class=" " style="border: solid 1px black; text-align:center"><img src="../assets/images/icons/pen.png" alt="Update" width="25%" title="Modification"></td>  
+                        <td class=" " style="border: solid 1px black; text-align:center"><img src="../assets/images/icons/trash.png" alt="Trash" width="25%" title="Suppression"></td>  
                         {# <td class="borderTrueTopLeftRight espaceTopBottom titleCenter" onclick="document.location='{{ path('readscrapdetail', {'id':scraps.id}) }}">{{ scraps.titre }}</td>   #}
                     </tr>
                 {% endfor %}

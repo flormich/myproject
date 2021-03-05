@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Ajout article {% endblock %}
+{# {% block title %} {{ titreSite }} {% endblock %} #}
+
+{% block body_id %}app{% endblock %}
+
+{% block main %}
+    {% include 'baseOpen.html.php' %}
+    <center>
+    <h1>Ajouter des clés</h1>
+
+    {# {{ form_start(addArticleForm)}}
+        {{ form_row(addArticleForm.title, {
+            label: 'Titre : '
+        })}} #}
+
+        <br>
+
+   
+
+
+        <button class="btn" type="submit">Enregistrer</button>
+    {{ form_end(addArticleForm) }}
+    {% include 'footer.html.php' %}
+{% endblock %}
