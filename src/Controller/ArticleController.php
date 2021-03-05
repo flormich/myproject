@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
-use App\Entity\Users;
+use App\Entity\Articles;
+
+use App\Form\AddArticleFormType;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,21 +20,46 @@ class ArticleController extends AbstractController
      */
     public function AddArticle(Request $request): Response
     {
-        // $user = $this->getDoctrine()->getManager()->getRepository(Users::class)->findAll();
-        // $userCourant = $this->getUser()->getEmail();
-        // return $this->render('users/readUser.html.twig', [
-        //     // 'titreSite' => $_SESSION['titre'],
-        //     'user' => $user,
-        //     'userCourant' => $userCourant,
-        // ]);
+        $article = new Articles();
+        $form = $this->createForm(AddArticleFormType::class, $article);
+        $form->handleRequest($request);
+        
+        if ($form->isSubmitted() && $form->isValid()){
+            $article->setDateCreate(new \DateTime('now', new \DateTimeZone('Europe/Paris')));
+            
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($article);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_home');
+        }
+
+        return $this->render('articles/addArticle.html.twig', [
+            'addArticleForm' => $form->createView(),
+            // 'titreSite' => $_SESSION['titre'],
+        ]);
     }
 
     /**
-     * @Route("/readArticle", name="show_all_article")
+     * @Route("/showAllArticle", name="show_all_article")
      */
     public function ShowAllArticle(Request $request): Response
     {
+        $articles = $this->getDoctrine()->getManager()->getRepository(Articles::class)->findBy([],['id' => 'DESC']);
+        return $this->render('articles/showAllArticle.html.twig', [
+            'articles' => $articles,
+        ]);
+    }
 
+    /**
+     * @Route("/manageArticles", name="manage_articles")
+     */
+    public function ManageArticles(Request $request): Response
+    {
+        $articles = $this->getDoctrine()->getManager()->getRepository(Articles::class)->findBy([],['id' => 'DESC']);
+        return $this->render('articles/manageArticles.html.twig', [
+            'articles' => $articles,
+        ]);
     }
 
     /**
@@ -44,7 +71,7 @@ class ArticleController extends AbstractController
     }
 
     /**
-     * @ROute("/updateArticle", name="update_article")
+     * @ROute("/updateArticle/{id}", name="update_article")
      */
     public function UpdateArticle(Request $request): Response
     {
@@ -52,10 +79,18 @@ class ArticleController extends AbstractController
     }
 
     /**
-     * @Route("deleteArticle", name="delete_article")
+     * @Route("deleteArticle/{id}", name="delete_article")
      */
-    public function DeleteArticle(Request $request): Response
+    public function DeleteArticle(Articles $article, Request $request): Response
     {
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($article);
+        $em->flush();
 
+        // $request->getSession()
+        //     ->getFlashBag()
+        //     ->add('action', 'Supression réussi');
+        
+        return $this->redirectToRoute('manage_articles');
     }
 }

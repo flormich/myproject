@@ -36,18 +36,12 @@ class RegistrationController extends AbstractController
      */
     public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
     {
-        // $role = $this->getDoctrine()->getManager()->getRepository(Roles::class)->findById(2);
-        // $rollle = $role[0];
-        // var_dump($role);
         $user = new Users();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
         $em = $this->getDoctrine()->getManager();
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            // encode the plain password
-            // $user->setRole($role);
-            
+        if ($form->isSubmitted() && $form->isValid()) {            
             $user
                 ->initRole($em)
                 ->setDateCreate(new \DateTime())
@@ -58,10 +52,7 @@ class RegistrationController extends AbstractController
                             // $form->get('plainPassword')->getData()
                             $form->get('password')->getData()
                         )
-                    ); 
-
-            // var_dump($user);
-            // var_dump($rollle);
+                    );
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
