@@ -31,46 +31,26 @@
                         </tr><tr>
                             <td style="height:50px"></td>
                         </tr><tr class="textShadow borderTableauUsers textTableauUsers" style="text-align:center">
-                            <td class=" borderTrue" style="border: 1px solid black; width:300px; height:300px">
-                                {{ article.title }}
-                                <br>
-                                {{ article.picture }}
+                            <td class=" borderTrue" style="border: 1px solid black; width:300px; height:300px; text-decoration:none;">
+                                <a href="{{ path('show_one_article', {'title':article.title}) }}" style="text-decoration:none; color:black">
+                                    <p style="color:red">{{ article.title }}
+                                    <br>
+                                    {# {{ article.picture }} #}
+                                </a>
                             </td>
                             <td style="width:50px"></td>
                         {% else %}
-                            <td class=" borderTrue" style="border: 1px solid black; width:300px; height:300px">
-                                {{ article.title }}
-                                <br>
-                                {{ article.picture }}
+                            <td class=" borderTrue" style="border: 1px solid black; width:300px; height:300px; ">
+                                <a href="{{ path('show_one_article', {'title':article.title}) }}" style="text-decoration:none; color:black">
+                                    {{ article.title }}
+                                    <br>
+                                    {# {{ article.picture }} #}
+                                </a>
                             </td>     
                             <td style="width:50px"></td>                       
                         {% endif %}
-                    {% endfor %}
-
-                {# {% for i in 0..18 %}
-        {% for article in articles %}
-                {% if (i%3 == 0) %}
-                        <td class=" borderTrue" style="border: 1px solid black; width:50px">
-                            {{ article.title }}
-                            <br>
-                            {{ article.picture }}
-                        </td>
-                        <td style="width:30px"></tSd>
-       
-        {% else %}
-                    {{ i }}
-                    </tr><br><tr>
-                    </tr><td class=" borderTrue" style="border: 1px solid black; width:50px">
-                            {{ article.title }}
-                            <br>
-                            {{ article.picture }}
-                        </td>
-                        <td style="width:30px"></tSd><tr>
-        {% endif %}
-                         {% endfor %}
-        {% endfor %} #}
-                    </tr>
- 
+                    {% endfor %}                       
+                    </tr> 
                 </tbody>                    
             </table>
             <br>

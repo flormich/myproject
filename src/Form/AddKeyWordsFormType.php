@@ -2,28 +2,25 @@
 
 namespace App\Form;
 
-use App\Entity\Articles;
+use App\Entity\KeyWord;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class AddArticleFormType extends AbstractType
+class AddKeyWordsFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title')
-            ->add('description')
-            // ->add('dateCreate')
-            // ->add('dateUpdate')
-            // ->add('picture')
+            ->add('name')
+            ->add('articles')
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Articles::class,
+            'data_class' => KeyWord::class,
         ]);
     }
 }

@@ -9,44 +9,82 @@
     {% include 'baseOpen.html.php' %}
         {# Corp de la page d'articles #}
     <div class="backgroundCreate heightMoy">
-        <br><center>
+        <center>
         <h3><b><u>Articles</u></b></h3>
         {% if not app.user %}
         {% else %}
             {% if (app.user.role.id == "1") %}
-            <a href="{{ path('manage_articles') }}"> <input type="button" value="Mettre en liste"> </a>
-            <br><br>
+                <a href="{{ path('update_article', {'id':article.id}) }}"><input type="button" value="Modifier"> </a>&emsp;
+                <a href="{{ path('delete_article', {'id':article.id}) }}"><input type="button" value="Supprimer"> </a>
+                <br><br>
             {% else %}
             {% endif %}
         {% endif %}
     </div>
-       <div class="backgroundCreate">
+    {# {% for pictures in picture %} #}
+    <div class="backgroundCreate">
         <section class="paragraphe subtitle read ">
             <center>
-            <table class="tableauReadScrap backgroundWhite" style="border-collapse:collapse; text-align:center; margin:auto">                
+            <table class="tableauReadScrap backgroundWhite" style="border: 1px solid black; border-collapse:collapse; text-align:center; margin:auto; width:80%; height:400px">                
                 <tbody class="pointerRead">
-                        <tr class="textShadow borderTableauUsers textTableauUsers" style="text-align:center">
-                    {% for article in articles %}
-                        {% if ((article.id)%3 == 0) %}
-                        </tr><tr>
-                            <td style="height:50px"></td>
-                        </tr><tr class="textShadow borderTableauUsers textTableauUsers" style="text-align:center">
-                            <td class=" borderTrue" style="border: 1px solid black; width:300px; height:300px">
-                                {{ article.title }}
+                    <tr class="textShadow borderTableauUsers textTableauUsers" style="text-align:center">
+                        {# Titre article #}
+                        <td class=" borderTrue" style="width:49%; height:5%; font-weight:bold; border: 1px solid black; border-collapse:collapse;">
+                            {{ article.title }}
+                        </td>
+                        <td rowspan="4" colspan="3" class=" borderTrue" style="width:51%; height:60%; border: 1px solid black; border-collapse:collapse;">
+                            {# Affiche Pictures #}
+                            {% for picture in pictures %}
+                                {% if ( picture.article.id == article.id ) %}
+                                    {{ picture.name }}
+                                {% endif %}
                                 <br>
-                                {{ article.picture }}
-                            </td>
-                            <td style="width:50px"></td>
-                        {% else %}
-                            <td class=" borderTrue" style="border: 1px solid black; width:300px; height:300px">
-                                {{ article.title }}
-                                <br>
-                                {{ article.picture }}
-                            </td>     
-                            <td style="width:50px"></td>                       
-                        {% endif %}
-                    {% endfor %}
-                    </tr> 
+                            {% endfor %}
+                        </td>
+                    </tr>
+                    {# Afficher Theme #}
+                    <tr class="textShadow borderTableauUsers textTableauUsers" style="text-align:center">
+                        <td class=" borderTrue" style="height:5%; border: 1px solid black; border-collapse:collapse;">Thème :
+                            {% for theme in article.themes %}
+                                {{ theme.name }} /                                
+                            {% endfor %}
+                        </td>
+                    </tr>
+                    <tr class="textShadow borderTableauUsers textTableauUsers" style="text-align:center">
+                        <td class=" borderTrue" style="height:5%; font-weight:bold; vertical-align: middle; border: 1px solid black; border-collapse:collapse;">Description</td>
+                    </tr>
+                    {# Descripton #}
+                    <tr class="textShadow borderTableauUsers textTableauUsers" style="text-align:center; vertical-align: top;">
+                        <td rowspan="2" class=" borderTrue" style="height:30%; border: 1px solid black; border-collapse:collapse;">
+                            {{ article.Description }}
+                        </td>
+                    </tr>
+                    {# Petite photos #}
+                    <tr>
+                        <td style="width:17%; height:30%; border: 1px solid black; border-collapse:collapse;">
+                            {% for picture in pictures %}
+                                {% if ( picture.article.id == article.id ) %}
+                                    {{ picture.name }}
+                                {% endif %}
+                            {% endfor %}
+                        </td>
+                        <td style="width:17%; border: 1px solid black; border-collapse:collapse;"></td>
+                        <td style="width:17%; border: 1px solid black; border-collapse:collapse;"></td>
+                    </tr>
+                    {# liens + Keywords #}
+                    <tr class="textShadow borderTableauUsers textTableauUsers" style="text-align:center">
+                        {# <td class=" borderTrue" style="height:50px">Liens matériel utilisé :<br> #}
+                        <td style="border: 1px solid black; border-collapse:collapse;"></td>
+                        <td colspan="3" class="borderTrue" style="font-weight:bold; height:5%; border: 1px solid black; border-collapse:collapse;">Mots clé :</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td colspan="3" class="borderTrue" style="height:10%; border: 1px solid black; border-collapse:collapse;">
+                            {% for keyWord in article.keyWords %}
+                                {{ keyWord.name }} /
+                            {% endfor %}
+                        </td>
+                    </tr>
                 </tbody>                    
             </table>
             <br>
@@ -54,4 +92,5 @@
         {% include 'footer.html.php' %}
         </section>
     </div>
+    {# {% endfor %} #}
 {% endblock %} 

@@ -38,8 +38,8 @@
                         <td class=" borderTrue" style="border: solid 1px black; text-align:center; height:50px; width:100px"><a class="textDecoration">{{ article.id }}</a></td>   
                         <td class=" borderTrue" style="border: solid 1px black; text-align:center;">{{ article.title }}</td>
                         <td class=" borderTrue" style="border: solid 1px black; text-align:center">{{ article.datecreate | date('d/m/Y') }}</td>  
-                        <td class=" " style="border: solid 1px black; text-align:center"><img src="../assets/images/icons/pen.png" alt="Update" width="25%" title="Modification"></td>  
-                        <td class=" " style="border: solid 1px black; text-align:center"><a href="{{ path('delete_article', {'id':article.id}) }}"><img src="../assets/images/icons/trash.png" alt="Trash" width="25%" title="Suppression"></td>  
+                        <td class=" " style="border: solid 1px black; text-align:center"><a href="{{ path('update_article', {'id':article.id}) }}"><img src="../assets/images/icons/pen.png" alt="Update" width="25%" title="Modification"></a></td>  
+                        <td class=" " style="border: solid 1px black; text-align:center"><a href="{{ path('delete_article', {'id':article.id}) }}"><img src="../assets/images/icons/trash.png" alt="Trash" width="25%" title="Suppression"></a></td>  
                     </tr>
                 {% endfor %}
                 </tbody>                    

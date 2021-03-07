@@ -40,11 +40,6 @@ class Articles
     private $dateUpdate;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $picture;
-
-    /**
      * @ORM\ManyToMany(targetEntity=Theme::class, mappedBy="articles")
      */
     private $themes;
@@ -54,10 +49,16 @@ class Articles
      */
     private $keyWords;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Pictures::class, mappedBy="articles")
+     */
+    private $pictures;
+
     public function __construct()
     {
         $this->themes = new ArrayCollection();
         $this->keyWords = new ArrayCollection();
+        $this->pictures = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -113,18 +114,6 @@ class Articles
         return $this;
     }
 
-    public function getPicture(): ?string
-    {
-        return $this->picture;
-    }
-
-    public function setPicture(?string $picture): self
-    {
-        $this->picture = $picture;
-
-        return $this;
-    }
-
     /**
      * @return Collection|Theme[]
      */
@@ -174,6 +163,36 @@ class Articles
     {
         if ($this->keyWords->removeElement($keyWord)) {
             $keyWord->removeArticle($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Pictures[]
+     */
+    public function getPictures(): Collection
+    {
+        return $this->pictures;
+    }
+
+    public function addPicture(Pictures $picture): self
+    {
+        if (!$this->pictures->contains($picture)) {
+            $this->pictures[] = $picture;
+            $picture->setArticle($this);
+        }
+
+        return $this;
+    }
+
+    public function removePicture(Pictures $picture): self
+    {
+        if ($this->pictures->removeElement($picture)) {
+            // set the owning side to null (unless already changed)
+            if ($picture->getArticle() === $this) {
+                $picture->setArticle(null);
+            }
         }
 
         return $this;
