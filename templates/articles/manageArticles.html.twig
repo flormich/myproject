@@ -17,8 +17,22 @@
         <br><center>
         <h3><b><u>Gérer les Articles</u></b></h3>
         <a href="{{ path('show_all_article') }}"> <input type="button" value="Revenir en tuile"></a>
+        {% if (app.user.role.id == "1") %}
+            <br><br>
+            <a href="{{ path('add_article') }}"> <input type="button" value="Ajout Article"></a>
+        {% endif %}
         <br><br>
     </div>
+
+    {% if app.session.flashBag.has('action') %}
+        <center>
+        <div class="alert alert-fail" style="font-weight: bold;">
+            {% for msg in app.session.flashBag.get('action') %}
+                {{ msg }}
+                <br><br>
+            {% endfor %}
+        </div>
+    {% endif %}
 
     <div class="backgroundCreate" style="text-align:center; margin:auto">
         <section class="paragraphe subtitle read ">
@@ -26,7 +40,7 @@
             <table class="tableauReadScrap backgroundWhite" style="border-collapse:collapse; border:solid 1px black">                
                 <tbody class="pointerRead">
                     <tr class="textShadow borderTableauUsers textTitleUsers borderTrue">
-                        <th rowspan="2" class="borderTrue widthColonneUsers" style="border: solid 1px black; text-align:center; height:50px; width:130px">Num. id</th>
+                        {# <th rowspan="2" class="borderTrue widthColonneUsers" style="border: solid 1px black; text-align:center; height:50px; width:130px">Num. id</th> #}
                         <th rowspan="2" class="borderTrue widthColonneUsers" style="border: solid 1px black;text-align:center; width:130px"><a href="{{ path('showArtSortPrenom') }}">Titre</a></th>
                         <th rowspan="2" class="borderTrue widthColonneUsers" style="border: solid 1px black; text-align:center; width:130px"><a href="{{ path('showArtSortPrenom') }}">Date création</a></th>
                         <th colspan="2" class="borderTrue widthColonneUsers" style="border: solid 1px black; text-align:center; ">Interagir</th>
@@ -35,11 +49,11 @@
                     </tr>
                 {% for article in articles %}
                     <tr class="textShadow borderTableauUsers textTableauUsers">
-                        <td class=" borderTrue" style="border: solid 1px black; text-align:center; height:50px; width:100px"><a class="textDecoration">{{ article.id }}</a></td>   
+                        {# <td class=" borderTrue" style="border: solid 1px black; text-align:center; height:50px; width:100px"><a class="textDecoration">{{ article.id }}</a></td>    #}
                         <td class=" borderTrue" style="border: solid 1px black; text-align:center;">{{ article.title }}</td>
                         <td class=" borderTrue" style="border: solid 1px black; text-align:center">{{ article.datecreate | date('d/m/Y') }}</td>  
-                        <td class=" " style="border: solid 1px black; text-align:center"><a href="{{ path('update_article', {'id':article.id}) }}"><img src="../assets/images/icons/pen.png" alt="Update" width="25%" title="Modification"></a></td>  
-                        <td class=" " style="border: solid 1px black; text-align:center"><a href="{{ path('delete_article', {'id':article.id}) }}"><img src="../assets/images/icons/trash.png" alt="Trash" width="25%" title="Suppression"></a></td>  
+                        <td class=" " style="border: solid 1px black; text-align:center"><a href="{{ path('update_article', {'title':article.title}) }}"><img src="../assets/images/icons/pen.png" alt="Update" width="25%" title="Modification"></a></td>  
+                        <td class=" " style="border: solid 1px black; text-align:center"><a href="{{ path('delete_article', {'title':article.title}) }}"><img src="../assets/images/icons/trash.png" alt="Trash" width="25%" title="Suppression"></a></td>  
                     </tr>
                 {% endfor %}
                 </tbody>                    

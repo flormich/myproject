@@ -11,14 +11,52 @@
     <h1>Ajouter un article</h1>
 
     {{ form_start(addArticleForm)}}
+    {# {{ form_start(addPictureForm)}} #}
+
         {{ form_row(addArticleForm.title, {
             label: 'Titre : '
         })}}
-        {{ form_row(addArticleForm.description, {
-            label: 'Descriptoin : '
+       {{ form_row(addArticleForm.description, {
+            label: 'Description : '
+        })}} 
+        {{ form_row(addPictureForm.name, {
+            label: 'Nom Picture : '
         })}}
-        {# {{ form_row(addArticleForm.picture, {
-            label: 'Photos :'
+        {{ form_row(addPictureForm.address, {
+            label: 'Adresse : '
+        })}}
+
+        {# {{ form_row(addPictureForm.name, {
+            label: 'Picture :'
+        })}} #}
+       {# {{ form_row(addArticleForm.articlesThemes, {
+            label: 'Themes : '
+        })}}  #}
+        {# {{ form_row(addArticleForm.keyWords, {
+            label: 'KeyWords : '
+        })}} #}
+
+        {{ form_start(addThemeForm, {
+            attr: {
+                novalidate: "novalidate",
+                class: "row"
+            }
+            }) }}
+            {{ form_row(addThemeForm.name, {
+            label: 'Theme : '
+        })}}
+        
+        
+
+
+       {# {{ form_start(addKeyForm, {
+            attr: {
+                novalidate: "novalidate",
+                class: "row"
+            }
+            }) }} #}
+        {# {{ form_row(addKeyForm.name, {
+            label: 'Mot clé : '
         })}} #}
         {# {{ form_row(addArticleForm.themes, {
             label: 'Themes :',
@@ -29,11 +67,10 @@
             value: 'name',
         })}} #}
         <br>
-
-   
-
-
         <button class="btn" type="submit">Enregistrer</button>
+    {# {{ form_end(addThemeForm) }} #}
+    {# {{ form_end(addKeyForm) }} #}
+    {# {{ form_end(addPictureForm) }} #}
     {{ form_end(addArticleForm) }}
     {% include 'footer.html.php' %}
 {% endblock %}

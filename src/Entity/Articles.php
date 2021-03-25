@@ -40,25 +40,32 @@ class Articles
     private $dateUpdate;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Theme::class, mappedBy="articles")
-     */
-    private $themes;
-
-    /**
      * @ORM\ManyToMany(targetEntity=KeyWord::class, mappedBy="articles")
      */
     private $keyWords;
 
     /**
      * @ORM\OneToMany(targetEntity=Pictures::class, mappedBy="articles")
+     * @ORM\JoinColumn(onDelete="CASCADE") 
      */
     private $pictures;
 
+    /**
+     * @ORM\OneToMany(targetEntity=ArticlesThemes::class, mappedBy="articles")
+     * @ORM\JoinColumn(onDelete="CASCADE")
+     */
+    private $articlesThemes;
+
     public function __construct()
     {
-        $this->themes = new ArrayCollection();
         $this->keyWords = new ArrayCollection();
         $this->pictures = new ArrayCollection();
+        $this->articlesThemes = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return $this->getTitle();
     }
 
     public function getId(): ?int
@@ -115,33 +122,6 @@ class Articles
     }
 
     /**
-     * @return Collection|Theme[]
-     */
-    public function getThemes(): Collection
-    {
-        return $this->themes;
-    }
-
-    public function addTheme(Theme $theme): self
-    {
-        if (!$this->themes->contains($theme)) {
-            $this->themes[] = $theme;
-            $theme->addArticle($this);
-        }
-
-        return $this;
-    }
-
-    public function removeTheme(Theme $theme): self
-    {
-        if ($this->themes->removeElement($theme)) {
-            $theme->removeArticle($this);
-        }
-
-        return $this;
-    }
-
-    /**
      * @return Collection|KeyWord[]
      */
     public function getKeyWords(): Collection
@@ -192,6 +172,36 @@ class Articles
             // set the owning side to null (unless already changed)
             if ($picture->getArticle() === $this) {
                 $picture->setArticle(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ArticlesThemes[]
+     */
+    public function getArticlesThemes(): Collection
+    {
+        return $this->articlesThemes;
+    }
+
+    public function addArticlesTheme(ArticlesThemes $articlesTheme): self
+    {
+        if (!$this->articlesThemes->contains($articlesTheme)) {
+            $this->articlesThemes[] = $articlesTheme;
+            $articlesTheme->setArticles($this);
+        }
+
+        return $this;
+    }
+
+    public function removeArticlesTheme(ArticlesThemes $articlesTheme): self
+    {
+        if ($this->articlesThemes->removeElement($articlesTheme)) {
+            // set the owning side to null (unless already changed)
+            if ($articlesTheme->getArticles() === $this) {
+                $articlesTheme->setArticles(null);
             }
         }
 

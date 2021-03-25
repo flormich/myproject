@@ -3,59 +3,121 @@
 namespace App\Controller;
 
 use App\Entity\Articles;
-use App\Entity\Theme;
+use App\Entity\Themes;
+use App\Entity\KeyWord;
 use App\Entity\Pictures;
+use App\Entity\ArticlesThemes;
+use App\Entity\Users;
 
 use App\Form\AddArticleFormType;
+use App\Form\AddThemeFormType;
+use App\Form\AddKeyWordsFormType;
+use App\Form\AddPictureFormType;
+use Symfony\Component\Form\Form;
 
 use App\Repository\ArticlesRepository;
-use App\Repository\PicturesRepository;
-use App\Repository\ThemeRepository;
+use App\Repository\ThemesRepository;
 use App\Repository\KeyWordRepository;
+use App\Repository\PicturesRepository;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 
 // include __DIR__ . '/../../assets/variable.php';
 
 class ArticleController extends AbstractController
 {
+    private function addKey(Form $form): Form
+    {
+        return $form->add("name", EntityType::class,[
+            "label" => "Mot clé",
+            "class" => KeyWord::class,
+            "choice_label" => "name",
+            "expanded" => true,
+            "multiple" => false,
+            "required" => false,
+        ]);
+    }
+
+    private function addThemes(Form $form): Form
+    {
+        return $form->add("name", EntityType::Class,[
+            "label" => "Theme : ",
+            "class" => Themes::Class,
+            "choice_label" => "name",
+            "expanded" => false,
+            "multiple" => false,
+            "required" => true,
+        ]);
+    }
+
+
     /**
      * @Route("/addArticle", name="add_article")
      */
     public function AddArticle(Request $request): Response
     {
         $article = new Articles();
-        $form = $this->createForm(AddArticleFormType::class, $article);
-        $form->handleRequest($request);
-        
-        if ($form->isSubmitted() && $form->isValid()){
+        $formArticle = $this->createForm(AddArticleFormType::class, $article);
+        $formArticle->handleRequest($request);   
+        $articleTitle = $article->getTitle();
+
+        $theme = new Themes();
+        $formTheme = $this->createForm(AddThemeFormType::class, $theme);
+        $this->addThemes($formTheme);
+        $formTheme->handleRequest($request);
+        //Récupére les données Id pour le persisté dans la table Join
+        $idTheme = $this->getDoctrine()->getManager()->getRepository(Themes::class)->findOneBy(array('name' => $theme->getName()));
+
+        $picture = new Pictures();
+        $formPicture = $this->createForm(AddPictureFormType::class, $picture);
+        $formPicture->handleRequest($request);
+
+        $articlesThemes = new ArticlesThemes();
+        $articlesThemes->setThemes($idTheme);
+        $articlesThemes->setArticles($article);    
+
+        if ($formArticle->isSubmitted() && $formArticle->isValid()){
             $article->setDateCreate(new \DateTime('now', new \DateTimeZone('Europe/Paris')));
+            $article->setDateUpdate(new \DateTime('now', new \DateTimeZone('Europe/Paris')));
+            $picture->setArticle($article);
             
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($article);
+            $entityManager->persist($article);   
+            $entityManager->persist($picture);   
+            $entityManager->persist($articlesThemes);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_home');
+            $request->getSession()
+                ->getFlashBag()
+                ->add('action', 'L\' enregistrement de : ' . $articleTitle .  ' a réussi');
+            return $this->redirectToRoute('manage_articles');
         }
 
         return $this->render('articles/addArticle.html.twig', [
-            'addArticleForm' => $form->createView(),
+            'addArticleForm' => $formArticle->createView(),
+            'addThemeForm' => $formTheme->createView(),
+            'addPictureForm' => $formPicture->createView(),
+            // 'addKeyForm' => $form3->createView(),
             // 'titreSite' => $_SESSION['titre'],
         ]);
     }
 
     /**
-     * @Route("/showAllArticle", name="show_all_article")
+     * @Route("/", name="show_all_article")
      */
     public function ShowAllArticle(Request $request): Response
     {
         $articles = $this->getDoctrine()->getManager()->getRepository(Articles::class)->findBy([],['id' => 'DESC']);
+        $pictures = $this->getDoctrine()->getManager()->getRepository(Pictures::class)->findAll();
 
         return $this->render('articles/showAllArticle.html.twig', [
             'articles' => $articles,
+            'pictures' => $pictures,
         ]);
     }
 
@@ -73,12 +135,14 @@ class ArticleController extends AbstractController
     /**
      * @Route("/showArticle/{title}", name="show_one_article")
      */
-    public function ShowOneArticle($title, ArticlesRepository $articleRepo, PicturesRepository $pictureRepo, ThemeRepository $themeRepo, KeyWordRepository $KeyWordRepo)
+    public function ShowOneArticle($title, ArticlesRepository $articleRepo, PicturesRepository $pictureRepo, ThemesRepository $themeRepo, KeyWordRepository $KeyWordRepo)
     {
         $article = $articleRepo->findOneBy(['title' => $title]);
         $pictures = $pictureRepo->findAll();
-        $themes = $themeRepo->findAll();
-        $keyWords = $KeyWordRepo->findAll();
+        // $themes = $themeRepo->findAll();
+        $themes = $article->getArticlesThemes();
+        $keyWords = $article->getKeyWords();
+        // $keyWords = $KeyWordRepo->findAll();
 
         // return $this->render('articles/showOneArticle.html.twig', compact('article', 'picture'));
         return $this->render('articles/showOneArticle.html.twig', [
@@ -89,52 +153,26 @@ class ArticleController extends AbstractController
         ]);
     }
 
-//     /**
-//      * @Route("/showArticle/{id}", name="show_one_article")
-//      */
-//     public function ShowOneArticle($id, Request $request): Response
-//     {
-//         $entityManager = $this->getDoctrine()->getManager();
-//         // $article = $entityManager->getRepository(Articles::class)->find($id);
-//         // $theme = $articles->getThemes();
-//         // $theme = $entityManager->getRepository(Theme::class)->find($id);
-//         // $picture = $entityManager->getRepository(Pictures::class)->findBy(['articles' => '1']);
-//         $picture = $entityManager->getRepository(Pictures::class)->findBy(['id' => '2']);
-
-//         // var_dump($picture);
-
-//         // var_dump($theme);
-
-// //         $livre = $this->getDoctrine()->getRepository("AppBundle:Livre")->findOneByIsbn($isbn);
-// // // équivaut à : $livre = $this->getDoctrine()->getRepository("AppBundle:Livre")->findOneBy(["isbn"=>$isbn]);
-// // if(!$livre){
-// //     // erreur livre non trouvé
-// // }
-
-// // $tags = $livre->getTags();
-
-
-//         return $this->render('articles/showOneArticle.html.twig', [
-//             // 'article' => $article,
-//             // 'theme' => $theme,
-//             'picture' => $picture,
-//         ]);
-//     }
-
     /**
-     * @ROute("/updateArticle/{id}", name="update_article")
+     * @ROute("/updateArticle/{title}", name="update_article")
      */
-    public function UpdateArticle(int $id, Articles $articles, Request $request): Response
+    public function UpdateArticle($title, Articles $article, Request $request): Response
     {
-        $entityManager = $this->getDoctrine()->getManager();
+        
+        // $entityManager = $this->getDoctrine()->getManager();
 
-        $article = $entityManager->getRepository(Articles::class)->find($id);
+        // $article = $entityManager->getRepository(Articles::class)->find($title);
         $form = $this->createForm(AddArticleFormType::class, $article);
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid())
         {
+            $article->setDateUpdate(new \DateTime('now', new \DateTimeZone('Europe/Paris')));
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($article);
             $entityManager->flush();
+
+            return $this->redirectToRoute('show_all_article');
         }
 
         return $this->render('articles/updateArticles.html.twig', [
@@ -143,17 +181,19 @@ class ArticleController extends AbstractController
     }
 
     /**
-     * @Route("deleteArticle/{id}", name="delete_article")
+     * @Route("deleteArticle/{title}", name="delete_article")
      */
     public function DeleteArticle(Articles $article, Request $request): Response
     {
         $em = $this->getDoctrine()->getManager();
+        $articleTitle = $article->getTitle();
+
         $em->remove($article);
         $em->flush();
 
-        // $request->getSession()
-        //     ->getFlashBag()
-        //     ->add('action', 'Supression réussi');
+        $request->getSession()
+            ->getFlashBag()
+            ->add('action', 'La supression de ' . $articleTitle .  ' a réussi');
         
         return $this->redirectToRoute('manage_articles');
     }

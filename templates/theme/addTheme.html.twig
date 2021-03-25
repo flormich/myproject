@@ -10,13 +10,13 @@
     <center>
     <h1>Ajouter un theme</h1>
 
-    {# {{ form_start(addThemeForm)}}
+    {{ form_start(addThemeForm)}}
         {{ form_row(addThemeForm.name, {
             label: 'Nom : '
-        })}} #}
+        })}}
 
         <br>
         <button class="btn" type="submit">Enregistrer</button>
-    {# {{ form_end(addThemeForm) }} #}
+    {{ form_end(addThemeForm) }}
     {% include 'footer.html.php' %}
 {% endblock %}

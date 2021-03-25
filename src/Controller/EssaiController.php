@@ -23,13 +23,13 @@ class EssaiController extends AbstractController
     }
 
     /**
-     * @Route ("/", name="index")
+     * @Route ("/index", name="index")
      */
     public function index(): Response
     {
         return $this->render('index.html.twig', [
             'titreSite' => $_SESSION['titre'],
-            'text' => 'Ici un text',
+            // 'text' => 'Ici un text',
         ]);
     }
 }

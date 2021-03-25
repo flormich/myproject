@@ -2,25 +2,33 @@
 
 namespace App\Form;
 
-use App\Entity\Theme;
+use App\Entity\Themes;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class AddThemeFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+        // ->add("name", EntityType::Class,[
+        //     "label" => "Theme : ",
+        //     "class" => Themes::Class,
+        //     "choice_label" => "name",
+        //     "expanded" => false,
+        //     "multiple" => false,
+        //     "required" => true,
+        // ]);
             ->add('name')
-            ->add('articles')
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Theme::class,
+            'data_class' => Themes::class,
         ]);
     }
 }

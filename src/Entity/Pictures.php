@@ -24,8 +24,19 @@ class Pictures
 
     /**
      * @ORM\ManyToOne(targetEntity=Articles::class, inversedBy="pictures")
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     private $articles;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $address;
+
+    public function __toString()
+    {
+        return $this->getName();
+    }
 
     public function getId(): ?int
     {
@@ -72,4 +83,16 @@ class Pictures
 
     //     return $this;
     // }
+
+    public function getAddress(): ?string
+    {
+        return $this->address;
+    }
+
+    public function setAddress(string $address): self
+    {
+        $this->address = $address;
+
+        return $this;
+    }
 }

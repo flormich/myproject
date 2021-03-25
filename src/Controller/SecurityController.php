@@ -27,7 +27,7 @@ class SecurityController extends AbstractController
 
         return $this->render('security/login.html.twig', [
             'last_username' => $lastUsername, 
-            'titreSite' => $_SESSION['titre'],
+            // 'titreSite' => $_SESSION['titre'],
             'error' => $error]);
     }
 

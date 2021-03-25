@@ -50,7 +50,11 @@
                         {# <td class=" borderTrue">{{ user.password }}</td>   #}
                         <td class=" borderTrue" style="border: solid 1px black; text-align:center">{{ users.role.name }}</td>  
                         <td class=" " style="border: solid 1px black; text-align:center"><img src="../assets/images/icons/pen.png" alt="Update" width="25%" title="Modification"></td>  
-                        <td class=" " style="border: solid 1px black; text-align:center"><a href="{{ path('delete_user', {'id':users.id}) }}"><img src="../assets/images/icons/trash.png" alt="Trash" width="25%" title="Suppression"></a></td>  
+                        {% if users.email != userCourant %}
+                            <td class=" " style="border: solid 1px black; text-align:center"><a href="{{ path('delete_user', {'id':users.id}) }}"><img src="../assets/images/icons/trash.png" alt="Trash" width="25%" title="Suppression"></a></td>  
+                        {% else %}
+                            <td class=" " style="border: solid 1px black; text-align:center"></td>  
+                        {% endif %}
                         {# <td class="borderTrueTopLeftRight espaceTopBottom titleCenter" onclick="document.location='{{ path('readscrapdetail', {'id':scraps.id}) }}">{{ scraps.titre }}</td>   #}
                     </tr>
                 {% endfor %}

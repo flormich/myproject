@@ -28,6 +28,7 @@ class UserController extends AbstractController
     {
         $user = $this->getDoctrine()->getManager()->getRepository(Users::class)->findAll();
         $userCourant = $this->getUser()->getEmail();
+        // $currentUser = $this->get('security.token_storage')->getTok:en()->getUser();
         return $this->render('users/readUser.html.twig', [
             // 'titreSite' => $_SESSION['titre'],
             'user' => $user,

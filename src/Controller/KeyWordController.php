@@ -2,9 +2,9 @@
 
 namespace App\Controller;
 
-use App\Entity\Themes;
+use App\Entity\KeyWord;
 
-use App\Form\AddThemeFormType;
+use App\Form\AddKeyWordsFormType;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,28 +13,27 @@ use Symfony\Component\Routing\Annotation\Route;
 
 // include __DIR__ . '/../../assets/variable.php';
 
-class ThemeController extends AbstractController
+class KeyWordController extends AbstractController
 {
     /**
-     * @Route("/addTheme", name="add_theme")
+     * @Route("/addKey", name="add_key")
      */
-    public function AddThemes(Request $request): Response
+    public function AddTheme(Request $request): Response
     {
-        $theme = new Themes();
-        $form = $this->createForm(AddThemeFormType::class, $theme);
+        $keyWord = new KeyWord();
+        $form = $this->createForm(AddKeyWordsFormType::class, $keyWord);
         $form->handleRequest($request);
         
         if ($form->isSubmitted() && $form->isValid()){            
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($theme);
+            $entityManager->persist($keyWord);
             $entityManager->flush();
-            // echo $theme;
 
-            return $this->redirectToRoute('add_theme');
+            return $this->redirectToRoute('add_key');
         }
 
-        return $this->render('theme/addTheme.html.twig', [
-            'addThemeForm' => $form->createView(),
+        return $this->render('keyWords/keyWords.html.twig', [
+            'addkeyForm' => $form->createView(),
             // 'titreSite' => $_SESSION['titre'],
         ]);
     }

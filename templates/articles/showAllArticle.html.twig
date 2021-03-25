@@ -9,9 +9,11 @@
     {% include 'baseOpen.html.php' %}
         {# Corp de la page d'articles #}
     <div class="backgroundCreate heightMoy">
-        <br><center>
+        <br>
+        <center>
         <h3><b><u>Articles</u></b></h3>
         {% if not app.user %}
+            Erreur de chargement aller dans (ShowAllArticle.htlm.twig ligne 15)
         {% else %}
             {% if (app.user.role.id == "1") %}
             <a href="{{ path('manage_articles') }}"> <input type="button" value="Mettre en liste"> </a>
@@ -20,41 +22,48 @@
             {% endif %}
         {% endif %}
     </div>
-       <div class="backgroundCreate">
-        <section class="paragraphe subtitle read ">
-            <center>
-            <table class="tableauReadScrap backgroundWhite" style="border-collapse:collapse; text-align:center; margin:auto">                
+    <div class="backgroundCreate">
+        <section class="paragraphe subtitle read ">   
+        <center>         
+            <table class="tableauReadScrap backgroundWhite" style="border-spacing: 50px 3rem; text-align:center; margin:auto">                
                 <tbody class="pointerRead">
-                        <tr class="textShadow borderTableauUsers textTableauUsers" style="text-align:center">
                     {% for article in articles %}
-                        {% if ((article.id)%3 == 0) %}
-                        </tr><tr>
+                    {# <tr class="textShadow borderTableauUsers textTableauUsers" style="text-align:center"> #}
+                    <tr onclick="document.location='{{ path('show_one_article', {'title':article.title}) }}'" >
+                        {# {% if ((article.id)%4 == 0) %}
+                        </tr>
+                        <tr>
                             <td style="height:50px"></td>
-                        </tr><tr class="textShadow borderTableauUsers textTableauUsers" style="text-align:center">
-                            <td class=" borderTrue" style="border: 1px solid black; width:300px; height:300px; text-decoration:none;">
-                                <a href="{{ path('show_one_article', {'title':article.title}) }}" style="text-decoration:none; color:black">
-                                    <p style="color:red">{{ article.title }}
-                                    <br>
-                                    {# {{ article.picture }} #}
-                                </a>
+                        </tr>
+                        <tr class="textShadow borderTableauUsers textTableauUsers" style="text-align:center">
+                            <td onclick="document.location='{{ path('show_one_article', {'title':article.title}) }}'" class=" borderTrue" style="border: 1px solid black; width:300px; height:300px; text-decoration:none; cursor:pointer; margin-left:10px; margin-right:10px">
+                                <p>{{ article.title }}
+                                <br>                                    
+                                {% for picture in pictures %}
+                                    {% if ( picture.article.id == article.id ) %}                                            
+                                        {{ picture.name }}                                           
+                                    {% endif %}
+                                {% endfor %}
                             </td>
                             <td style="width:50px"></td>
-                        {% else %}
-                            <td class=" borderTrue" style="border: 1px solid black; width:300px; height:300px; ">
-                                <a href="{{ path('show_one_article', {'title':article.title}) }}" style="text-decoration:none; color:black">
-                                    {{ article.title }}
-                                    <br>
-                                    {# {{ article.picture }} #}
-                                </a>
+                        {% else %} #}
+                            <td style="border: 1px solid black; width:50rem; height:20rem; cursor:pointer;">
+                                {{ article.title }}
+                                <br>
+                                {% for picture in pictures %}
+                                    {% if ( picture.article.id == article.id ) %}                                                                                       
+                                        {{ picture.name }}<br>                                                                               
+                                    {% endif %}
+                                {% endfor %}
                             </td>     
-                            <td style="width:50px"></td>                       
-                        {% endif %}
-                    {% endfor %}                       
+                        {# {% endif %} #}
                     </tr> 
+                    {% endfor %}                       
                 </tbody>                    
             </table>
             <br>
         <br>
+        <center>
         {% include 'footer.html.php' %}
         </section>
     </div>

@@ -73,7 +73,7 @@ class RegistrationController extends AbstractController
 
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $form->createView(),
-            'titreSite' => $_SESSION['titre'],
+            // 'titreSite' => $_SESSION['titre'],
         ]);
     }
 

@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %} Ajout article {% endblock %}
+{% block title %} Midfier article {% endblock %}
 {# {% block title %} {{ titreSite }} {% endblock %} #}
 
 {% block body_id %}app{% endblock %}
@@ -11,12 +11,16 @@
     <h1>Modifier un article</h1>
 
     {{ form_start(updateArticleForm)}}
+        <div class="input">
         {{ form_row(updateArticleForm.title, {
             label: 'Titre : '
         })}}
+        </div>
+        <div>
         {{ form_row(updateArticleForm.description, {
-            label: 'Descriptoin : '
+            label: 'Description : '
         })}}
+        </div>
         {# {{ form_row(updateArticleForm.picture, {
             label: 'Photos :'
         })}} #}

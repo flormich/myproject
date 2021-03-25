@@ -14,8 +14,8 @@
         {% if not app.user %}
         {% else %}
             {% if (app.user.role.id == "1") %}
-                <a href="{{ path('update_article', {'id':article.id}) }}"><input type="button" value="Modifier"> </a>&emsp;
-                <a href="{{ path('delete_article', {'id':article.id}) }}"><input type="button" value="Supprimer"> </a>
+                <a href="{{ path('update_article', {'title':article.title}) }}"><input type="button" value="Modifier"> </a>&emsp;
+                <a href="{{ path('delete_article', {'title':article.title}) }}"><input type="button" value="Supprimer"> </a>
                 <br><br>
             {% else %}
             {% endif %}
@@ -45,8 +45,8 @@
                     {# Afficher Theme #}
                     <tr class="textShadow borderTableauUsers textTableauUsers" style="text-align:center">
                         <td class=" borderTrue" style="height:5%; border: 1px solid black; border-collapse:collapse;">Thème :
-                            {% for theme in article.themes %}
-                                {{ theme.name }} /                                
+                            {% for theme in article.articlesThemes %}
+                                {{ theme.themes }} /                                
                             {% endfor %}
                         </td>
                     </tr>

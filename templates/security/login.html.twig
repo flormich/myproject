@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %} {{ titreSite }} {% endblock %}
+{# {% block title %} {{ titreSite }} {% endblock %} #}
 
 {% block body_id %}app{% endblock %}
 
@@ -10,6 +10,7 @@
 
 {% block main %}
     {% include 'baseOpen.html.php' %}
+    <center>
     <form method="post">
         {% if error %}
             <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
@@ -21,30 +22,41 @@
             </div>
         {% endif %}
 
-        <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-        <label for="inputEmail">Email</label>
-        <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" required autofocus>
-        <label for="inputPassword">Password</label>
-        <input type="password" name="password" id="inputPassword" class="form-control" required>
+        <h1 class="h3 mb-3 font-weight-normal">Connexion</h1>
+        <table>
+            <tr style="text-align:center; margin:auto">
+                <td style="width:250px">
+                    <label class="label" for="inputEmail">Email : </label><br>
+                    <input class="input" type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" required autofocus>
+                    <br><br>
+                    <label class="label" for="inputPassword">Password : </label>
+                    <input class="input" type="password" name="password" id="inputPassword" class="form-control" required>
+                    <br><br>
+                    <input type="hidden" name="_csrf_token"
+                        value="{{ csrf_token('authenticate') }}"
+                    >
 
-        <input type="hidden" name="_csrf_token"
-            value="{{ csrf_token('authenticate') }}"
-        >
+                    {#
+                        Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
+                        See https://symfony.com/doc/current/security/remember_me.html
 
-        {#
-            Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
-            See https://symfony.com/doc/current/security/remember_me.html
+                        <div class="checkbox mb-3">
+                            <label>
+                                <input type="checkbox" name="_remember_me"> Remember me
+                            </label>
+                        </div>
+                    #}
 
-            <div class="checkbox mb-3">
-                <label>
-                    <input type="checkbox" name="_remember_me"> Remember me
-                </label>
-            </div>
-        #}
-
-        <button class="btn btn-lg btn-primary" type="submit">
-            Sign in
-        </button>
+                    <button onclick="document.location='{{ path('show_all_article') }}'" class="btn btn-lg btn-primary" type="submit" style="width:100px">
+                        <img src="../assets/images/icons/cancel.png" width="70%" title="Annuler">
+                    </button> 
+                    &emsp;
+                    <button class="btn btn-lg btn-primary" type="submit" style="width:100px">
+                        <img src="../assets/images/icons/accept.png" width="70%" title="Valider">
+                    </button> 
+                </td>
+            </tr>
+        </table>        
     </form>
     {% include 'footer.html.php' %}
 {% endblock %}

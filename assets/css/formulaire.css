@@ -1,0 +1,13 @@
+#label {
+    display: block; 
+    width: 25%; 
+    float: left; 
+    text-align:end;
+}
+
+#input {
+    display: block; 
+    width: 65%; 
+    float: left; 
+    margin-left:5px
+}

@@ -11,13 +11,13 @@ include __DIR__ . '/../../assets/variable.php';
 class MainController extends AbstractController
 {
     /**
-     * @Route("/", name="app_home")
+     * @Route("/appHome", name="app_home")
      */
     public function index(): Response
     {
         return $this->render('index.html.twig', [
             'titreSite' => $_SESSION['titre'],
-            'text' => 'Ici un text',
+            // 'text' => 'Ici un text',
         ]);
     }
 }

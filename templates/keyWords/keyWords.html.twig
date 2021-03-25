@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %} Ajout article {% endblock %}
+{% block title %} Ajout mot clés {% endblock %}
 {# {% block title %} {{ titreSite }} {% endblock %} #}
 
 {% block body_id %}app{% endblock %}
@@ -10,10 +10,10 @@
     <center>
     <h1>Ajouter des clés</h1>
 
-    {# {{ form_start(addArticleForm)}}
-        {{ form_row(addArticleForm.title, {
-            label: 'Titre : '
-        })}} #}
+    {{ form_start(addkeyForm)}}
+        {{ form_row(addkeyForm.name, {
+            label: 'nom : '
+        })}}
 
         <br>
 
@@ -21,6 +21,6 @@
 
 
         <button class="btn" type="submit">Enregistrer</button>
-    {{ form_end(addArticleForm) }}
+    {{ form_end(addkeyForm) }}
     {% include 'footer.html.php' %}
 {% endblock %}
