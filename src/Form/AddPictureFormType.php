@@ -13,7 +13,7 @@ class AddPictureFormType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('address')
+            // ->add('address')
             // ->add('articles')
         ;
     }

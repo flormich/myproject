@@ -2,3 +2,12 @@
     border: solid 1px black;
     border-collapse: collapse;
 }
+
+.tailleBtn {
+    width: 11rem;
+    height: 3rem;
+}
+
+.iconBtn {
+    width: 25%;
+}

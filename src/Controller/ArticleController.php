@@ -73,9 +73,9 @@ class ArticleController extends AbstractController
         //Récupére les données Id pour le persisté dans la table Join
         $idTheme = $this->getDoctrine()->getManager()->getRepository(Themes::class)->findOneBy(array('name' => $theme->getName()));
 
-        $picture = new Pictures();
-        $formPicture = $this->createForm(AddPictureFormType::class, $picture);
-        $formPicture->handleRequest($request);
+        // $picture = new Pictures();
+        // $formPicture = $this->createForm(AddPictureFormType::class, $picture);
+        // $formPicture->handleRequest($request);
 
         $articlesThemes = new ArticlesThemes();
         $articlesThemes->setThemes($idTheme);
@@ -84,11 +84,51 @@ class ArticleController extends AbstractController
         if ($formArticle->isSubmitted() && $formArticle->isValid()){
             $article->setDateCreate(new \DateTime('now', new \DateTimeZone('Europe/Paris')));
             $article->setDateUpdate(new \DateTime('now', new \DateTimeZone('Europe/Paris')));
-            $picture->setArticle($article);
+            // $picture->setArticle($article);
             
+            // On récupère les images transmises
+            $mainImage = $formArticle->get('picturesMain')->getData();
+            $images = $formArticle->get('pictures')->getData();
+
+            // Image principale
+            $fichierPrincipale = md5(uniqid()).'.'.$mainImage->guessExtension();
+            $mainImage->move(
+                $this->getParameter('images_directory'),
+                $fichierPrincipale
+            );
+            $mainPicture = new Pictures();
+                $mainPicture->setAddress($fichierPrincipale);
+                $mainPicture->setName('Name');
+                $mainPicture->setArticle($article); 
+                $mainPicture->setMainPicture('1');
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($mainPicture);
+                
+
+            // On boucle sur les images
+            foreach($images as $image){
+                // On génère un nouveau nom de fichier
+                $fichier = md5(uniqid()).'.'.$image->guessExtension();
+                              
+                // On copie le fichier dans le dossier uploads
+                $image->move(
+                    $this->getParameter('images_directory'),
+                    $fichier
+                );
+                // On crée l'image dans la base de données
+                $picture = new Pictures();
+                $picture->setAddress($fichier);
+                $picture->setName('Name');
+                $picture->setArticle($article); 
+                $picture->setMainPicture('0');
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($picture);
+            }
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($article);   
-            $entityManager->persist($picture);   
+            // $entityManager->persist($mainPicture);
+            // $entityManager->persist($picture);   
             $entityManager->persist($articlesThemes);
             $entityManager->flush();
 
@@ -101,7 +141,7 @@ class ArticleController extends AbstractController
         return $this->render('articles/addArticle.html.twig', [
             'addArticleForm' => $formArticle->createView(),
             'addThemeForm' => $formTheme->createView(),
-            'addPictureForm' => $formPicture->createView(),
+            // 'addPictureForm' => $formPicture->createView(),
             // 'addKeyForm' => $form3->createView(),
             // 'titreSite' => $_SESSION['titre'],
         ]);
@@ -112,12 +152,15 @@ class ArticleController extends AbstractController
      */
     public function ShowAllArticle(Request $request): Response
     {
-        $articles = $this->getDoctrine()->getManager()->getRepository(Articles::class)->findBy([],['id' => 'DESC']);
-        $pictures = $this->getDoctrine()->getManager()->getRepository(Pictures::class)->findAll();
+        $articles = $this->getDoctrine()->getManager()->getRepository(Articles::class)->findBy([],['dateUpdate' => 'DESC']);
+        // $pictures = $this->getDoctrine()->getManager()->getRepository(Pictures::class)->findAll();
+        $mainPictures = $this->getDoctrine()->getManager()->getRepository(Pictures::class)->findBy(['mainPicture' => "true"]);
+        // var_dump($mainPictures);
 
         return $this->render('articles/showAllArticle.html.twig', [
             'articles' => $articles,
-            'pictures' => $pictures,
+            // 'pictures' => $pictures,
+            'mainPictures' => $mainPictures,
         ]);
     }
 
@@ -138,18 +181,63 @@ class ArticleController extends AbstractController
     public function ShowOneArticle($title, ArticlesRepository $articleRepo, PicturesRepository $pictureRepo, ThemesRepository $themeRepo, KeyWordRepository $KeyWordRepo)
     {
         $article = $articleRepo->findOneBy(['title' => $title]);
-        $pictures = $pictureRepo->findAll();
-        // $themes = $themeRepo->findAll();
+        // $pictures = $pictureRepo->findAll();
+        $pictures = $pictureRepo->findBy(['articles' => $article->getId()]);
+        // $mainPictures = $pictureRepo->findOneBy(['id' => '46']);
+        // $mainPicture = $pictureRepo->findBy(['articles' => $article->getId()], ['mainPicture' => 'true']);
         $themes = $article->getArticlesThemes();
         $keyWords = $article->getKeyWords();
-        // $keyWords = $KeyWordRepo->findAll();
 
-        // return $this->render('articles/showOneArticle.html.twig', compact('article', 'picture'));
+        // $idArticle = $article->getId();
+        // $idArticlePicture = $article->getPictures();
+        // var_dump($idArticle);
+        // var_dump($idArticlePicture);
+        // var_dump($pictures);
+
+        // if ( $article->getId() == $picturesarticle.id )
+        $output = array();
+        foreach($pictures as $event)
+            {
+                $output[$event->getId()] = $event->getAddress();
+                $arrayId[] = $event->getAddress();
+            }
+
+        if (isset($arrayId[0])) {
+        } else {
+            $arrayId[0] = 'nophoto';
+        }
+
+        if (isset($arrayId[1])) {
+        } else {
+            $arrayId[1] = 'nophoto';
+        }
+
+        if (isset($arrayId[2])) {
+        } else {
+            $arrayId[2] = 'nophoto';
+        }
+
+        if (isset($arrayId[3])) {
+        } else {
+            $arrayId[3] = 'nophoto';
+        }
+
+        // if (isset($mainPicture)) {
+        //     $mainPicture = $mainPicture->getAddress();
+        // } else {
+        //     $mainPicture = 'nophoto';
+        // }
+
         return $this->render('articles/showOneArticle.html.twig', [
             'article' => $article,
             'pictures' => $pictures,
             'themes' => $themes,
             'keyWords' => $keyWords,
+            // 'mainPicture' => $mainPicture,
+            'outputs1' => $arrayId[0],
+            'outputs2' => $arrayId[1],
+            'outputs3' => $arrayId[2],
+            'outputs4' => $arrayId[3],
         ]);
     }
 

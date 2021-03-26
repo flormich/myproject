@@ -50,9 +50,25 @@
                             <td style="border: 1px solid black; width:50rem; height:20rem; cursor:pointer;">
                                 {{ article.title }}
                                 <br>
-                                {% for picture in pictures %}
-                                    {% if ( picture.article.id == article.id ) %}                                                                                       
-                                        {{ picture.name }}<br>                                                                               
+                                {# {{ mainPicture.name }} #}
+                                {# {% for picture in pictures %} #}
+                                    {# {% if ( picture.article.id == article.id ) %}   #}
+                                         
+                                        {# {% set tab = [picture.address] %} #}
+                                            {# {{ picture.address }}<br>       #}
+                                            {# {{ tab[0] }}<br>       #}
+                                            {# <img src="imagesLoaders/nophoto.jpg" style="width:90%" /><br>   #}
+                                        {# {% endset %} #}
+                                    {# {% endif %} #}
+                                {# {% endfor %} #}
+                                {# <br> #}
+                                {% for mainPicture in mainPictures %}
+                                    {% if (mainPicture.article.id == article.id) %}
+                                        <br>
+                                        {{ mainPicture.mainpicture}}
+                                        <bt><br>
+                                        <img src="imagesLoaders/{{ mainPicture.address }}" style="width:90%" /><br>
+                                        <br>
                                     {% endif %}
                                 {% endfor %}
                             </td>     

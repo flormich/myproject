@@ -32,14 +32,23 @@
                         <td class=" borderTrue" style="width:49%; height:5%; font-weight:bold; border: 1px solid black; border-collapse:collapse;">
                             {{ article.title }}
                         </td>
-                        <td rowspan="4" colspan="3" class=" borderTrue" style="width:51%; height:60%; border: 1px solid black; border-collapse:collapse;">
-                            {# Affiche Pictures #}
-                            {% for picture in pictures %}
-                                {% if ( picture.article.id == article.id ) %}
-                                    {{ picture.name }}
+                        {# <td rowspan="4" colspan="3" class=" borderTrue" style="width:51%; height:60%; border: 1px solid black; border-collapse:collapse;">
+                            <br>
+                                {% if mainPicture == 'nophoto' %}
+                                    <img src="imagesLoaders/nophoto.jpg" style="width:90%" />                                    
+                                {% else %}
+                                    <a href="javascript:popup('imagesLoaders/{{ mainPicture }}')"><img src="imagesLoaders/{{ mainPicture }}" style="width:90%" />                                    
                                 {% endif %}
-                                <br>
-                            {% endfor %}
+                            <br><br>
+                        </td> #}
+                        <td rowspan="4" colspan="3" class=" borderTrue" style="width:51%; height:60%; border: 1px solid black; border-collapse:collapse;">
+                            <br>
+                                {% if outputs1 == 'nophoto' %}
+                                    <img src="imagesLoaders/nophoto.jpg" style="width:90%" />                                    
+                                {% else %}
+                                    <a href="javascript:popup('imagesLoaders/{{ outputs1 }}')"><img src="imagesLoaders/{{ outputs1 }}" style="width:90%" />                                    
+                                {% endif %}
+                            <br><br>
                         </td>
                     </tr>
                     {# Afficher Theme #}
@@ -62,14 +71,40 @@
                     {# Petite photos #}
                     <tr>
                         <td style="width:17%; height:30%; border: 1px solid black; border-collapse:collapse;">
-                            {% for picture in pictures %}
+                            <br>
+                                {% if outputs2 == 'nophoto' %}
+                                    <img src="imagesLoaders/nophoto.jpg" style="width:70%" />    
+                                {% else %}     
+                                    <a href="javascript:popup('imagesLoaders/{{ outputs2 }}')"><img src="imagesLoaders/{{ outputs2 }}" style="width:70%" />                       
+                                {% endif %}
+                            <br><br>
+                            {# {% for picture in pictures %}
                                 {% if ( picture.article.id == article.id ) %}
                                     {{ picture.name }}
-                                {% endif %}
-                            {% endfor %}
+                                {% else %}
+                                    {# <img src="{{ asset('images/icons/'~entity.nom|e) }}" alt="" /> #}
+                                    {# <img src="../assets/images/icons/noPhoto.png" alt="Pas d'image" /> #}
+                                {# {% endif %} #}
+                            {# {% endfor %} #}
                         </td>
-                        <td style="width:17%; border: 1px solid black; border-collapse:collapse;"></td>
-                        <td style="width:17%; border: 1px solid black; border-collapse:collapse;"></td>
+                        <td style="width:17%; border: 1px solid black; border-collapse:collapse;">
+                            <br>
+                                {% if outputs3 == 'nophoto' %}
+                                    <img src="imagesLoaders/nophoto.jpg" style="width:70%" />      
+                                {% else %}                              
+                                    <a href="javascript:popup('imagesLoaders/{{ outputs3 }}')"><img src="imagesLoaders/{{ outputs3 }}" style="width:70%" />                                    
+                                {% endif %}
+                            <br><br>
+                        </td>
+                        <td style="width:17%; border: 1px solid black; border-collapse:collapse;">
+                            <br>
+                                {% if outputs4 == 'nophoto' %}
+                                    <img src="imagesLoaders/nophoto.jpg" style="width:70%" />                                    
+                                {% else %}
+                                    <a href="javascript:popup('imagesLoaders/{{ outputs4 }}')"><img src="imagesLoaders/{{ outputs4 }}" style="width:70%" />                                    
+                                {% endif %}
+                            <br><br>
+                        </td>
                     </tr>
                     {# liens + Keywords #}
                     <tr class="textShadow borderTableauUsers textTableauUsers" style="text-align:center">

@@ -12,6 +12,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -44,6 +45,18 @@ class AddArticleFormType extends AbstractType
             //     "multiple" => true,
             //     "required" => false,
             // ])
+            ->add('pictures', FileType::class, [
+                'label' => 'Photos : ',
+                'multiple' => true,
+                'mapped' => false,
+                'required' => false
+            ])
+            ->add('picturesMain', FileType::class, [
+                'label' => 'Photo principale: ',
+                'multiple' => false,
+                'mapped' => false,
+                'required' => false
+            ])
             ;
     }
 

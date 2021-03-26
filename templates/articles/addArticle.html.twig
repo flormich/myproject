@@ -9,68 +9,99 @@
     {% include 'baseOpen.html.php' %}
     <center>
     <h1>Ajouter un article</h1>
+    <table style="text-align:center; margin:auto">
+        {{ form_start(addArticleForm) }}
+        {{ form_start(addThemeForm) }}
+        {# {{ form_start(addPictureForm) }} #}
+        {# {{ form_row(form._token) }} #}
+        {# {{ form_row(form._token) }} #}
+            <tr>
+                <td style="width:150px; height:20px; text-align:left">
+                    {{ form_label(addArticleForm.title, 'Titre :') }}
+                </td>
+                <td style="width:170px; height:20px; text-align:left">
+                    {{ form_errors(addArticleForm.title) }}
+                    {{ form_widget(addArticleForm.title) }}
+                    {# {{ form_row(addArticleForm.title, {
+                        label: 'Titre : '
+                    })}} #}
+                </td>
+            </tr>
+            <tr>
+                <td style="width:110px; height:20px; text-align:left">
+                    {{ form_label(addArticleForm.description, 'Description :')}}
+                </td>
+                <td style="width:170px; height:10px; text-align:left">
+                    {{ form_errors(addArticleForm.description)}}
+                    {{ form_widget(addArticleForm.description) }}
+                </td>
+            </tr>
+            {# <tr>
+                <td style="width:110px; height:20px; text-align:left">
+                    {{ form_label(addPictureForm.name, 'Nom de l\'image :')}}
+                </td>
+                <td style="width:170px; height:20px; text-align:left">
+                    {{ form_errors(addPictureForm.name)}}
+                    {{ form_widget(addPictureForm.name)}}
+                </td>
+            </tr> #}
 
-    {{ form_start(addArticleForm)}}
-    {# {{ form_start(addPictureForm)}} #}
+            {#<tr>
+                <td style="width:110px; height:20px; text-align:left">
+                    {{ form_label(addPictureForm.address, 'Adresse de l\'image :')}}
+                </td>
+                <td style="width:170px; height:20px; text-align:left">
+                    {{ form_errors(addPictureForm.address)}}
+                    {{ form_widget(addPictureForm.address)}}
+                </td>
+            </tr> #}
+            <tr>
+                <td style="width:110px; height:20px; text-align:left">
+                    {{ form_label(addArticleForm.picturesMain, 'Selectionnez photo principale :')}}
+                </td>
+                <td style="width:170px; height:10px; text-align:left">
+                    {{ form_errors(addArticleForm.picturesMain)}}
+                    {{ form_widget(addArticleForm.picturesMain) }}
+                </td>
+            </tr>
 
-        {{ form_row(addArticleForm.title, {
-            label: 'Titre : '
-        })}}
-       {{ form_row(addArticleForm.description, {
-            label: 'Description : '
-        })}} 
-        {{ form_row(addPictureForm.name, {
-            label: 'Nom Picture : '
-        })}}
-        {{ form_row(addPictureForm.address, {
-            label: 'Adresse : '
-        })}}
+            <tr>
+                <td style="width:110px; height:20px; text-align:left">
+                    {{ form_label(addArticleForm.pictures, 'Selectionnez photos :')}}
+                </td>
+                <td style="width:170px; height:10px; text-align:left">
+                    {{ form_errors(addArticleForm.pictures)}}
+                    {{ form_widget(addArticleForm.pictures) }}
+                </td>
+            </tr>
 
-        {# {{ form_row(addPictureForm.name, {
-            label: 'Picture :'
-        })}} #}
-       {# {{ form_row(addArticleForm.articlesThemes, {
-            label: 'Themes : '
-        })}}  #}
-        {# {{ form_row(addArticleForm.keyWords, {
-            label: 'KeyWords : '
-        })}} #}
+            <tr>
+                <td style="width:110px; height:20px; text-align:left">
+                    {{ form_label(addThemeForm.name, 'Indiquez le theme :')}}
+                </td>
+                    {{ form_errors(addThemeForm.name)}}
+                <td style="width:170px; height:20px; text-align:left">
+                    {{ form_widget(addThemeForm.name)}}
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" style="height:10px"></td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <button class="btn tailleBtn" type="submit">
+                        <img class="iconBtn" src="../assets/images/icons/save.png" title="Enregistrer">
+                    </button>
+                <td>
+            </tr>
 
-        {{ form_start(addThemeForm, {
-            attr: {
-                novalidate: "novalidate",
-                class: "row"
-            }
-            }) }}
-            {{ form_row(addThemeForm.name, {
-            label: 'Theme : '
-        })}}
-        
-        
-
-
-       {# {{ form_start(addKeyForm, {
-            attr: {
-                novalidate: "novalidate",
-                class: "row"
-            }
-            }) }} #}
-        {# {{ form_row(addKeyForm.name, {
-            label: 'Mot clé : '
-        })}} #}
-        {# {{ form_row(addArticleForm.themes, {
-            label: 'Themes :',
-            value: 'name',
-        })}}
-        {{ form_row(addArticleForm.keyWords, {
-            label: 'Keys : ',
-            value: 'name',
-        })}} #}
-        <br>
-        <button class="btn" type="submit">Enregistrer</button>
-    {# {{ form_end(addThemeForm) }} #}
-    {# {{ form_end(addKeyForm) }} #}
-    {# {{ form_end(addPictureForm) }} #}
-    {{ form_end(addArticleForm) }}
+            {{ form_rest(addThemeForm) }}
+            {{ form_rest(addArticleForm) }}
+            {# {{ form_rest(addPictureForm) }} #}
+        {{ form_end(addThemeForm) }}
+        {# {{ form_end(addKeyForm) }} #}
+        {# {{ form_end(addPictureForm) }} #}
+        {{ form_end(addArticleForm) }}
+    </table>
     {% include 'footer.html.php' %}
 {% endblock %}

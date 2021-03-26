@@ -33,6 +33,11 @@ class Pictures
      */
     private $address;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $mainPicture;
+
     public function __toString()
     {
         return $this->getName();
@@ -92,6 +97,18 @@ class Pictures
     public function setAddress(string $address): self
     {
         $this->address = $address;
+
+        return $this;
+    }
+
+    public function getMainPicture(): ?bool
+    {
+        return $this->mainPicture;
+    }
+
+    public function setMainPicture(bool $mainPicture): self
+    {
+        $this->mainPicture = $mainPicture;
 
         return $this;
     }
