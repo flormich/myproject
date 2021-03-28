@@ -23,6 +23,8 @@ class KeyWordController extends AbstractController
         $keyWord = new KeyWord();
         $form = $this->createForm(AddKeyWordsFormType::class, $keyWord);
         $form->handleRequest($request);
+
+        $showKeys =  $this->getDoctrine()->getManager()->getRepository(KeyWord::class)->findBy([], ['name' => 'ASC']);
         
         if ($form->isSubmitted() && $form->isValid()){            
             $entityManager = $this->getDoctrine()->getManager();
@@ -34,6 +36,7 @@ class KeyWordController extends AbstractController
 
         return $this->render('keyWords/keyWords.html.twig', [
             'addkeyForm' => $form->createView(),
+            'showKeys' => $showKeys,
             // 'titreSite' => $_SESSION['titre'],
         ]);
     }

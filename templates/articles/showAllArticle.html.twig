@@ -1,5 +1,5 @@
 {% extends 'base.html.twig' %}
-{% block title %} Montrer Articles {% endblock %}
+{# {% block title %} Montrer Articles {% endblock %} #}
 {% block body_id %} app {% endblock %}
 {% block header %}
     {# {% include 'shared/_header.html.twig' %} #}
@@ -29,7 +29,8 @@
                 <tbody class="pointerRead">
                     {% for article in articles %}
                     {# <tr class="textShadow borderTableauUsers textTableauUsers" style="text-align:center"> #}
-                    <tr onclick="document.location='{{ path('show_one_article', {'title':article.title}) }}'" >
+                    <tr onclick="document.location='{{ path('show_one_article', {'title':article.title}) }}'">
+                        
                         {# {% if ((article.id)%4 == 0) %}
                         </tr>
                         <tr>
@@ -47,9 +48,19 @@
                             </td>
                             <td style="width:50px"></td>
                         {% else %} #}
-                            <td style="border: 1px solid black; width:50rem; height:20rem; cursor:pointer;">
-                                {{ article.title }}
-                                <br>
+                            <td style="border: 2px solid black; width:50rem; height:20rem; cursor:pointer; background:LightSteelBlue">
+                            {# <br> #}
+                            <h4><b>{{ article.title }}</b></h4>
+                            <br>
+                            {% if not app.user %}
+                                {% else %}
+                                    {% if (app.user.role.id == "1") %}
+                                        <a href="{{ path('delete_article', {'title':article.title}) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet article ?');"><input type="button" value="Supprimer" style="float:right; margin-right:10px; background:Salmon	"> </a>
+                                        <a href="{{ path('update_article', {'title':article.title}) }}" ><input type="button" value="Modifier" style="float:right; margin-right:10px"> </a>
+                                        <br>                                
+                                    {% else %}
+                                    {% endif %}
+                            {% endif %}
                                 {# {{ mainPicture.name }} #}
                                 {# {% for picture in pictures %} #}
                                     {# {% if ( picture.article.id == article.id ) %}   #}
@@ -65,8 +76,7 @@
                                 {% for mainPicture in mainPictures %}
                                     {% if (mainPicture.article.id == article.id) %}
                                         <br>
-                                        {{ mainPicture.mainpicture}}
-                                        <bt><br>
+                                        {# {{ mainPicture.mainpicture}} #}                                        
                                         <img src="imagesLoaders/{{ mainPicture.address }}" style="width:90%" /><br>
                                         <br>
                                     {% endif %}

@@ -1,5 +1,5 @@
 {% extends 'base.html.twig' %}
-{% block title %} Montrer Articles {% endblock %}
+{# {% block title %} Montrer Articles {% endblock %} #}
 {% block body_id %} app {% endblock %}
 {% block header %}
     {# {% include 'shared/_header.html.twig' %} #}
@@ -15,7 +15,7 @@
         {% else %}
             {% if (app.user.role.id == "1") %}
                 <a href="{{ path('update_article', {'title':article.title}) }}"><input type="button" value="Modifier"> </a>&emsp;
-                <a href="{{ path('delete_article', {'title':article.title}) }}"><input type="button" value="Supprimer"> </a>
+                <a href="{{ path('delete_article', {'title':article.title}) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet article ?');"><input type="button" value="Supprimer"> </a>
                 <br><br>
             {% else %}
             {% endif %}
@@ -53,18 +53,18 @@
                     </tr>
                     {# Afficher Theme #}
                     <tr class="textShadow borderTableauUsers textTableauUsers" style="text-align:center">
-                        <td class=" borderTrue" style="height:5%; border: 1px solid black; border-collapse:collapse;">Thème :
+                        <td class=" borderTrue" style="height:5%; border: 1px solid black; border-collapse:collapse;"><b>Thème : </b>
                             {% for theme in article.articlesThemes %}
-                                {{ theme.themes }} /                                
+                                {{ theme.themes }}
                             {% endfor %}
                         </td>
                     </tr>
                     <tr class="textShadow borderTableauUsers textTableauUsers" style="text-align:center">
-                        <td class=" borderTrue" style="height:5%; font-weight:bold; vertical-align: middle; border: 1px solid black; border-collapse:collapse;">Description</td>
+                        <td class=" borderTrue" style="height:5%; font-weight:bold; vertical-align: middle; border-top: 1px solid black; border-collapse:collapse;">Description :</td>
                     </tr>
                     {# Descripton #}
                     <tr class="textShadow borderTableauUsers textTableauUsers" style="text-align:center; vertical-align: top;">
-                        <td rowspan="2" class=" borderTrue" style="height:30%; border: 1px solid black; border-collapse:collapse;">
+                        <td rowspan="2" class=" borderTrue" style="height:30%; border-bottom: 1px solid black; border-collapse:collapse;">
                             {{ article.Description }}
                         </td>
                     </tr>

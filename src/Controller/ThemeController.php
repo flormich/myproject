@@ -23,6 +23,8 @@ class ThemeController extends AbstractController
         $theme = new Themes();
         $form = $this->createForm(AddThemeFormType::class, $theme);
         $form->handleRequest($request);
+
+        $showTheme =  $this->getDoctrine()->getManager()->getRepository(Themes::class)->findBy([], ['name' => 'ASC']);
         
         if ($form->isSubmitted() && $form->isValid()){            
             $entityManager = $this->getDoctrine()->getManager();
@@ -35,6 +37,7 @@ class ThemeController extends AbstractController
 
         return $this->render('theme/addTheme.html.twig', [
             'addThemeForm' => $form->createView(),
+            'showThemes' => $showTheme,
             // 'titreSite' => $_SESSION['titre'],
         ]);
     }

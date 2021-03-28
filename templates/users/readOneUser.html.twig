@@ -15,8 +15,8 @@
     
     <div class="backgroundCreate heightMoy">
         <br><center>
-        <h3><b><u>Tous les Utilisateurs</u></b></h3>
-        <h4>{{ userCourant }}<h4>
+        <h3><b><u>Gérer mon compte</u></b></h3>
+        {# <h4>{{ userCourant }}<h4> #}
         <br>
     </div>
 
@@ -26,38 +26,31 @@
             <table class="tableauReadScrap backgroundWhite" style="border-collapse:collapse; border:solid 1px black">                
                 <tbody class="pointerRead">
                     <tr class="textShadow borderTableauUsers textTitleUsers borderTrue">
-                        <th rowspan="2" class="borderTrue widthColonneUsers" style="border: solid 1px black; text-align:center; height:50px; width:130px">Num. id</th>
-                        <th rowspan="2" class="borderTrue widthColonneUsers" style="border: solid 1px black;text-align:center; width:13px">Pseudo</th>
+                        <th rowspan="2" class="borderTrue widthColonneUsers" style="border: solid 1px black;text-align:center; width:130px; height:30px">Pseudo</th>
                         <th onclick="document.location='{{ path('showArtSortPrenom') }}'" rowspan="2" class="borderTrue widthColonneUsers" style="border: solid 1px black; text-align:center; width:130px; cursor:pointer;">Prénom</th>
                         <th onclick="document.location='{{ path('showArtSortNom') }}'" rowspan="2" class="borderTrue widthColonneUsers" style="border: solid 1px black; text-align:center; width:130px; cursor:pointer;">Nom</th>
                         <th rowspan="2" class="borderTrue widthColonneUsers" style="border: solid 1px black; text-align:center; width:130px">Email</th>
                         <th rowspan="2" class="borderTrue widthColonneUsers" style="border: solid 1px black; text-align:center; width:130px">Date Create</th>
                         {# <td rowspan="2" class="borderTrue widthColonneUsers">Mdp</td> #}
-                        <th rowspan="2" class="borderTrue widthColonneUsers" style="border: solid 1px black; text-align:center; width:130px">Role</th>
                         <th colspan="2" class="borderTrue widthColonneUsers" style="border: solid 1px black; text-align:center">Interagir</th>
                         {# <td colspan="2" class="borderTrue widthColonneIconeUsers">Action</td> #}
                     </tr>
                     <tr class="textShadow borderTableauUsers">
                     </tr>
-                {% for users in user %}
+                {# {% for users in user %} #}
                     <tr class="textShadow borderTableauUsers textTableauUsers">
-                        <td class=" borderTrue" style="border: solid 1px black; text-align:center; height:50px; width:100px"><a class="textDecoration">{{ users.id }}</a></td>   
-                        <td class=" borderTrue" style="border: solid 1px black; text-align:center;">{{ users.pseudo }}</td>
-                        <td class=" borderTrue" style="border: solid 1px black; text-align:center">{{ users.firstname }}</td>
-                        <td class=" borderTrue" style="border: solid 1px black; text-align:center">{{ users.name }}</td>
-                        <td class=" borderTrue" style="border: solid 1px black; text-align:center">{{ users.email }}</td>  
-                        <td class=" borderTrue" style="border: solid 1px black; text-align:center">{{ users.datecreate | date('d/m/Y') }}</td>  
+                        <td class=" borderTrue" style="border: solid 1px black; text-align:center;">{{ user.username }}</td>
+                        <td class=" borderTrue" style="border: solid 1px black; text-align:center">{{ user.firstname }}</td>
+                        <td class=" borderTrue" style="border: solid 1px black; text-align:center">{{ user.name }}</td>
+                        <td class=" borderTrue" style="border: solid 1px black; text-align:center">{{ user.email }}</td>  
+                        <td class=" borderTrue" style="border: solid 1px black; text-align:center">{{ user.datecreate | date('d/m/Y') }}</td>  
                         {# <td class=" borderTrue">{{ user.password }}</td>   #}
-                        <td class=" borderTrue" style="border: solid 1px black; text-align:center">{{ users.role.name }}</td>  
-                        <td class=" " style="border: solid 1px black; text-align:center"><img src="../assets/images/icons/pen.png" alt="Update" width="25%" title="Modification"></td>  
-                        {% if users.email != userCourant %}
-                            <td class=" " style="border: solid 1px black; text-align:center"><a href="{{ path('delete_user', {'id':users.id}) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet article ?');"><img src="../assets/images/icons/trash.png" alt="Trash" width="25%" title="Suppression"></a></td>  
-                        {% else %}
-                            <td class=" " style="border: solid 1px black; text-align:center"></td>  
-                        {% endif %}
+                        <td class=" " style="border: solid 1px black; text-align:center"><a href="{{ path('update_user', {'username':user.username}) }}"><img src="../assets/images/icons/pen.png" alt="Update" width="25%" title="Modification"></td>  
+                        <td class=" " style="border: solid 1px black; text-align:center"><a href="{{ path('delete_user', {'username':user.username}) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cotre compte ?');"><img src="../assets/images/icons/trash.png" alt="Trash" width="25%" title="Suppression"></a></td>  
+ 
                         {# <td class="borderTrueTopLeftRight espaceTopBottom titleCenter" onclick="document.location='{{ path('readscrapdetail', {'id':scraps.id}) }}">{{ scraps.titre }}</td>   #}
                     </tr>
-                {% endfor %}
+                {# {% endfor %} #}
                 </tbody>                    
             </table>
             <br>

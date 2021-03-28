@@ -16,9 +16,17 @@ class UserController extends AbstractController
     /**
      * @Route("/viewuser", name="view_user")
      */
-    public function ReadUser(): Response
+    public function ReadUser(Request $request): Response
     {
+        $currentUser = $this->getUser();
+        $user = $this->getDoctrine()->getManager()->getRepository(Users::class)->findOneBy(['email' => $currentUser->getEmail()]);
+        // var_dump($currentUser);
+        // var_dump($user);
 
+        return $this->render('users/readOneUser.html.twig', [
+            'user' => $user,
+            'currentUser' => $currentUser,
+        ]);
     }
 
     /**
@@ -65,15 +73,15 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/updateUser/{id}", name="update_user")
+     * @Route("/updateUser/{username}", name="update_user")
      */
     public function UpdateUsers(Request $request): Response
     {
-
+        exit ('Je suis dans le UserController -> UpdateUser');
     }
 
     /**
-     * @Route("/deleteUser/{id}", name="delete_user")
+     * @Route("/deleteUser/{username}", name="delete_user")
      */
     public function DeleteUsers(Users $user, Request $request): Response
     {
@@ -83,4 +91,7 @@ class UserController extends AbstractController
 
         return $this->redirectToRoute('all_users');
     }
+
+
+
 }

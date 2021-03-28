@@ -36,6 +36,15 @@ class ThemesRepository extends ServiceEntityRepository
     }
     */
 
+    public function findAllThemeByName()
+    {
+        return $this->createQueryBuilder('tbn')
+            ->innerJoin()
+            ->orderBy('tbn.name', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
     /*
     public function findOneBySomeField($value): ?Themes
     {

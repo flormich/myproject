@@ -61,10 +61,10 @@
                     <span class="mdl-layout-title">
                     </span>
                     <nav class="mdl-navigation menuLeft">
-                        <a class="menuLeft" href="{{ path('show_all_article') }}"><img src="../assets/images/icons/news.png" width="20%" title=" Actualités">&ensp;Actualités</a>
+                        <a class="menuLeft" href="{{ path('show_all_article') }}"><img src="../assets/images/icons/news.png" width="20%" title=" Actualités" style='margin-left:10px'>&ensp;Actualités</a>
                         <hr color="blue" size="10px">
                         {% if not app.user %}
-                            <a class="menuLeft menuconnexion" href="{{ path('app_register') }}"><img src="../assets/images/icones/keys.png" width="20%" title="Register" text-align="center">&ensp;Register</a>
+                            <a class="menuLeft menuconnexion" href="{{ path('app_register') }}"><img src="../assets/images/icones/keys.png" width="20%" title="Register" style='margin-left:10px'>&ensp;Register</a>
                         {% else %}
                             {# <a class="menuLeft" href="#"><img src="../assets/images/icones/shopping.png" width="40%" title="Calendrier" text-align="center">Calendrier</a> #}
                             {# <a class="menuLeft " href="readOrder"><img src="../assets/images/icones/shopping.png" width="20%" title="Commander">Commander</a> #}
@@ -74,15 +74,17 @@
                         {% if not app.user %}
                         {% else %}
                             {% if (app.user.role.id == "1") %}
-                                {{ dump(app.user) }}
+                                {# {{ dump(app.user) }}
                                 Je suis Admin
                                 {{ dump(app.user.username) }}
-                                {{ dump(app.user.role.name)}}
-                                <a class="menuLeft menuviewusers" href="{{ path('add_article') }}"><img src="../assets/images/icones/users.png" width="20%" title="Ajout article" text-align="center">Ajout Article</a>
-                                <a class="menuLeft menuviewusers" href="{{ path('add_theme') }}"><img src="../assets/images/icones/users.png" width="20%" title="Ajout thème" text-align="center">Ajout Thème</a>
-                                <a class="menuLeft menuviewusers" href="{{ path('add_key') }}"><img src="../assets/images/icones/users.png" width="20%" title="Ajout mot clés" text-align="center">Ajout Mots clés</a>
-                                <a class="menuLeft menuviewusers" href="{{ path('all_users') }}"><img src="../assets/images/icones/users.png" width="20%" title="Utilisateur" text-align="center">Utilisateurs</a>
+                                {{ dump(app.user.role.name)}} #}
+                                <a class="menuLeft menuviewusers" href="{{ path('add_article') }}"><img src="../assets/images/icons/addArticle.png" width="15%" title="Ajout article" style='margin-left:10px'>&ensp;Ajout Article</a>
+                                <a class="menuLeft menuviewusers" href="{{ path('add_theme') }}"><img src="../assets/images/icones/users.png" width="15%" title="Ajout thème" style='margin-left:10px'>&ensp;Ajout Thème</a>
+                                <a class="menuLeft menuviewusers" href="{{ path('add_key') }}"><img src="../assets/images/icones/users.png" width="15%" title="Ajout mot clés" style='margin-left:10px'>&ensp;Ajout Mots clés</a>
+                                <a class="menuLeft menuviewusers" href="{{ path('all_users') }}"><img src="../assets/images/icons/folderUsers.png" width="15%" title="Utilisateur" style='margin-left:10px'>&ensp;Utilisateurs</a>
                             {% else %}
+                                <a class="menuLeft menuviewusers" href="{{ path('view_user') }}"><img src="../assets/images/icons/folderUsers.png" width="15%" title="Gérer mon compte" style='margin-left:10px'>&ensp;Gérer mon compte</a>
+
                                 {{ dump(app.user) }}
                                 {{ dump(app.user.firstname)}}
                                 {{ dump(app.user.email)}}

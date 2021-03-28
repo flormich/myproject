@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {# {% block title %} {{ titreSite }} {% endblock %} #}
-{% block title %} ??? {% endblock %}
+{# {% block title %} ??? {% endblock %} #}
 
 {% block body_id %}app{% endblock %}
 
@@ -37,13 +37,15 @@
     <div class="backgroundCreate" style="text-align:center; margin:auto">
         <section class="paragraphe subtitle read ">
         <center>
-            <table class="tableauReadScrap backgroundWhite" style="border-collapse:collapse; border:solid 1px black">                
+            <table class="tableauReadScrap backgroundWhite" style="width:75%; border-collapse:collapse; border:solid 1px black">                
                 <tbody class="pointerRead">
                     <tr class="textShadow borderTableauUsers textTitleUsers borderTrue">
                         {# <th rowspan="2" class="borderTrue widthColonneUsers" style="border: solid 1px black; text-align:center; height:50px; width:130px">Num. id</th> #}
-                        <th rowspan="2" class="borderTrue widthColonneUsers" style="border: solid 1px black;text-align:center; width:130px"><a href="{{ path('showArtSortPrenom') }}">Titre</a></th>
-                        <th rowspan="2" class="borderTrue widthColonneUsers" style="border: solid 1px black; text-align:center; width:130px"><a href="{{ path('showArtSortPrenom') }}">Date création</a></th>
-                        <th colspan="2" class="borderTrue widthColonneUsers" style="border: solid 1px black; text-align:center; ">Interagir</th>
+                        <th onclick="document.location='{{ path('ManageArticlesShowTitleAsc')}}'" rowspan="2" class="borderTrue widthColonneUsers" style="border: solid 1px black;text-align:center; width:12%; height:40px; cursor:pointer">Titre</a></th>
+                        <th onclick="document.location='{{ path('manage_articles')}}'" rowspan="2" class="borderTrue widthColonneUsers" style="border: solid 1px black; text-align:center; width:12%; cursor:pointer;">Date création</a></th>
+                        <th onclick="document.location='{{ path('ManageArticlesShowThemeAsc')}}" rowspan="2" class="borderTrue widthColonneUsers" style="border: solid 1px black; text-align:center; width:12%; ">Themes</a></th>
+                        <th rowspan="2" class="borderTrue widthColonneUsers" style="border: solid 1px black; text-align:center; width:45%">Photo principale</a></th>
+                        <th colspan="2" class="borderTrue widthColonneUsers" style="border: solid 1px black; text-align:center; ">Intéragir</th>
                     </tr>
                     <tr class="textShadow borderTableauUsers">
                     </tr>
@@ -52,8 +54,18 @@
                         {# <td class=" borderTrue" style="border: solid 1px black; text-align:center; height:50px; width:100px"><a class="textDecoration">{{ article.id }}</a></td>    #}
                         <td class=" borderTrue" style="border: solid 1px black; text-align:center;">{{ article.title }}</td>
                         <td class=" borderTrue" style="border: solid 1px black; text-align:center">{{ article.datecreate | date('d/m/Y') }}</td>  
-                        <td class=" " style="border: solid 1px black; text-align:center"><a href="{{ path('update_article', {'title':article.title}) }}"><img src="../assets/images/icons/pen.png" alt="Update" width="25%" title="Modification"></a></td>  
-                        <td class=" " style="border: solid 1px black; text-align:center"><a href="{{ path('delete_article', {'title':article.title}) }}"><img src="../assets/images/icons/trash.png" alt="Trash" width="25%" title="Suppression"></a></td>  
+                        {% for theme in article.articlesThemes %}
+                            <td class=" borderTrue" style="border: solid 1px black; text-align:center;">{{ theme.themes }}</td>
+                        {% endfor %}
+                        {% for picture in pictures %}
+                            {% if picture.article.id == article.id %}
+                                {% if picture.mainPicture == 1 %}
+                                    <td class=" borderTrue" style="border: solid 1px black; text-align:center;"><img src="imagesLoaders/{{ picture.address }}" style="width:25%; padding-top:4px; padding-bottom:4px" /></td>
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                        <td class=" " style="border: solid 1px black; text-align:center"><a href="{{ path('update_article', {'title':article.title}) }}"><img src="../assets/images/icons/pen.png" alt="Update" width="45%" title="Modification"></a></td>  
+                        <td class=" " style="border: solid 1px black; text-align:center"><a href="{{ path('delete_article', {'title':article.title}) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet article ?');"><img src="../assets/images/icons/trash.png" alt="Trash" width="45%" title="Suppression"></a></td>  
                     </tr>
                 {% endfor %}
                 </tbody>                    

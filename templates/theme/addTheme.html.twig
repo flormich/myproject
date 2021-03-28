@@ -10,13 +10,44 @@
     <center>
     <h1>Ajouter un theme</h1>
 
-    {{ form_start(addThemeForm)}}
-        {{ form_row(addThemeForm.name, {
-            label: 'Nom : '
-        })}}
-
-        <br>
-        <button class="btn" type="submit">Enregistrer</button>
-    {{ form_end(addThemeForm) }}
+    <table>
+        <tr>
+            <td>
+                {{ form_start(addThemeForm)}}
+                    {{ form_row(addThemeForm.name, {
+                        label: 'Nom : '
+                    })}}
+            </td>
+            {# <td style="width:50px"></td>
+            <td rowspan="2" style="border:solid 1px black; text-align:center">
+                <b>Thèmes déjà enregistré</b><br><br>
+                {% for showTheme in showThemes %}
+                    {{ showTheme.name }}
+                    <br>
+                {% endfor %}
+            </td> #}
+        </tr>
+        <tr>
+            <td style="text-align:center; vertical-align:top" >
+                <br>
+                <button class="btn" type="submit">Enregistrer</button>
+            </td>
+            {# <td></td>
+            <td></td> #}
+        </tr>
+        {{ form_end(addThemeForm) }}
+    </table>
+    {# <table style="position:absolute; float:right; padding-right:5%"> #}
+    <table style="position:absolute; top:100px; left:80%; background:white">
+        <tr>
+            <td rowspan="2" style="border:solid 1px black; text-align:center">
+                <b>Thèmes déjà existant</b><br><br>
+                {% for showTheme in showThemes %}
+                    {{ showTheme.name }}
+                    <br>
+                {% endfor %}
+            </td>
+        </tr>
+    </table>
     {% include 'footer.html.php' %}
 {% endblock %}

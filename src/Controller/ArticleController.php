@@ -73,9 +73,9 @@ class ArticleController extends AbstractController
         //Récupére les données Id pour le persisté dans la table Join
         $idTheme = $this->getDoctrine()->getManager()->getRepository(Themes::class)->findOneBy(array('name' => $theme->getName()));
 
-        // $picture = new Pictures();
-        // $formPicture = $this->createForm(AddPictureFormType::class, $picture);
-        // $formPicture->handleRequest($request);
+        $image = new Pictures();
+        $formPicture = $this->createForm(AddPictureFormType::class, $image);
+        $formPicture->handleRequest($request);
 
         $articlesThemes = new ArticlesThemes();
         $articlesThemes->setThemes($idTheme);
@@ -98,7 +98,7 @@ class ArticleController extends AbstractController
             );
             $mainPicture = new Pictures();
                 $mainPicture->setAddress($fichierPrincipale);
-                $mainPicture->setName('Name');
+                $mainPicture->setName($image);
                 $mainPicture->setArticle($article); 
                 $mainPicture->setMainPicture('1');
                 $entityManager = $this->getDoctrine()->getManager();
@@ -126,9 +126,7 @@ class ArticleController extends AbstractController
             }
 
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($article);   
-            // $entityManager->persist($mainPicture);
-            // $entityManager->persist($picture);   
+            $entityManager->persist($article);     
             $entityManager->persist($articlesThemes);
             $entityManager->flush();
 
@@ -141,7 +139,7 @@ class ArticleController extends AbstractController
         return $this->render('articles/addArticle.html.twig', [
             'addArticleForm' => $formArticle->createView(),
             'addThemeForm' => $formTheme->createView(),
-            // 'addPictureForm' => $formPicture->createView(),
+            'addPictureForm' => $formPicture->createView(),
             // 'addKeyForm' => $form3->createView(),
             // 'titreSite' => $_SESSION['titre'],
         ]);
@@ -170,8 +168,13 @@ class ArticleController extends AbstractController
     public function ManageArticles(Request $request): Response
     {
         $articles = $this->getDoctrine()->getManager()->getRepository(Articles::class)->findBy([],['id' => 'DESC']);
+        $pictures = $this->getDoctrine()->getManager()->getRepository(Pictures::class)->findAll();
+        $themes = $this->getDoctrine()->getManager()->getRepository(Themes::class)->findAll();
+
         return $this->render('articles/manageArticles.html.twig', [
             'articles' => $articles,
+            'pictures' => $pictures,
+            'themes' => $themes,
         ]);
     }
 
@@ -253,8 +256,50 @@ class ArticleController extends AbstractController
         $form = $this->createForm(AddArticleFormType::class, $article);
         $form->handleRequest($request);
 
+        $pictures = $this->getDoctrine()->getManager()->getRepository(Pictures::class)->findBy(['articles' => $article->getId()]);
+        $mainPictures = $pictures[0];
+
         if($form->isSubmitted() && $form->isValid())
         {
+            // On récupère les images transmises
+            $mainImage = $form->get('picturesMain')->getData();
+            $images = $form->get('pictures')->getData();
+
+            // Image principale
+            $fichierPrincipale = md5(uniqid()).'.'.$mainImage->guessExtension();
+            $mainImage->move(
+                $this->getParameter('images_directory'),
+                $fichierPrincipale
+            );
+            $mainPicture = new Pictures();
+                $mainPicture->setAddress($fichierPrincipale);
+                $mainPicture->setName('Name');
+                $mainPicture->setArticle($article); 
+                $mainPicture->setMainPicture('1');
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($mainPicture);
+                
+
+            // On boucle sur les images
+            foreach($images as $image){
+                // On génère un nouveau nom de fichier
+                $fichier = md5(uniqid()).'.'.$image->guessExtension();
+                              
+                // On copie le fichier dans le dossier uploads
+                $image->move(
+                    $this->getParameter('images_directory'),
+                    $fichier
+                );
+                // On crée l'image dans la base de données
+                $picture = new Pictures();
+                $picture->setAddress($fichier);
+                $picture->setName('Name');
+                $picture->setArticle($article); 
+                $picture->setMainPicture('0');
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($picture);
+            }
+
             $article->setDateUpdate(new \DateTime('now', new \DateTimeZone('Europe/Paris')));
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($article);
@@ -265,24 +310,75 @@ class ArticleController extends AbstractController
 
         return $this->render('articles/updateArticles.html.twig', [
             'updateArticleForm' => $form->createView(),
+            'pictures' => $pictures,
+            'mainPictures' => $mainPictures,
         ]);
     }
 
     /**
      * @Route("deleteArticle/{title}", name="delete_article")
      */
-    public function DeleteArticle(Articles $article, Request $request): Response
+    public function DeleteArticle(Articles $article, PicturesRepository $pictureRepo, Request $request): Response
     {
         $em = $this->getDoctrine()->getManager();
         $articleTitle = $article->getTitle();
+        // $articleId = $article->getId();
 
+        $picture = new Pictures();
         $em->remove($article);
+        $em->remove($picture);
         $em->flush();
+
+        $AddressPicture = $pictureRepo->findBy(['articles' => $article->getId()]);
+        $lengthTab = count($AddressPicture);
+        for ($i=0; $i<$lengthTab; $i++){
+            // $affichage[] = $AddressPicture[$i]->getAddress();
+            // On supprime le fichier
+            unlink($this->getParameter('images_directory').'/'.$AddressPicture[$i]->getAddress());
+        }
 
         $request->getSession()
             ->getFlashBag()
             ->add('action', 'La supression de ' . $articleTitle .  ' a réussi');
         
+        // return ('#');
         return $this->redirectToRoute('manage_articles');
+    }
+
+
+
+
+
+    // Trie du ManageArticle
+
+    /**
+     * @Route("/ManageArticlesShowThemeAsc", name="ManageArticlesShowThemeAsc")
+     */
+    public function ManageArticlesShowThemeAsc(Request $request): Response
+    {
+        $articles = $this->getDoctrine()->getManager()->getRepository(Articles::class)->findBy([],['articlesThemes' => 'ASC']);
+        $pictures = $this->getDoctrine()->getManager()->getRepository(Pictures::class)->findAll();
+        $themes = $this->getDoctrine()->getManager()->getRepository(Themes::class)->findAll();
+
+        return $this->render('articles/manageArticles.html.twig', [
+            'articles' => $articles,
+            'pictures' => $pictures,
+            'themes' => $themes,
+        ]);
+    }
+    /**
+     * @Route("/ManageArticlesShowTitleAsc", name="ManageArticlesShowTitleAsc")
+     */
+    public function ManageArticlesShowTitleAsc(Request $request): Response
+    {
+        $articles = $this->getDoctrine()->getManager()->getRepository(Articles::class)->findBy([],['title' => 'ASC']);
+        $pictures = $this->getDoctrine()->getManager()->getRepository(Pictures::class)->findAll();
+        $themes = $this->getDoctrine()->getManager()->getRepository(Themes::class)->findAll();
+
+        return $this->render('articles/manageArticles.html.twig', [
+            'articles' => $articles,
+            'pictures' => $pictures,
+            'themes' => $themes,
+        ]);
     }
 }

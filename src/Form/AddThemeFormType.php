@@ -16,10 +16,10 @@ class AddThemeFormType extends AbstractType
         // ->add("name", EntityType::Class,[
         //     "label" => "Theme : ",
         //     "class" => Themes::Class,
-        //     "choice_label" => "name",
-        //     "expanded" => false,
-        //     "multiple" => false,
-        //     "required" => true,
+        // //     "choice_label" => "name",
+        // //     "expanded" => false,
+        //     "multiple" => true,
+        // //     "required" => true,
         // ]);
             ->add('name')
         ;

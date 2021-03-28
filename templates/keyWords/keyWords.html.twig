@@ -10,17 +10,34 @@
     <center>
     <h1>Ajouter des clés</h1>
 
-    {{ form_start(addkeyForm)}}
-        {{ form_row(addkeyForm.name, {
-            label: 'nom : '
-        })}}
-
-        <br>
-
-   
-
-
-        <button class="btn" type="submit">Enregistrer</button>
+    <table>
+        <tr>
+            <td>
+                {{ form_start(addkeyForm)}}
+                    {{ form_row(addkeyForm.name, {
+                        label: 'nom : '
+                    })}}
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align:center; vertical-align:top" >
+                <br>
+                <button class="btn" type="submit">Enregistrer</button>
+            </td>
+        </tr>
+    </table>
+    <table style="position:absolute; top:100px; left:80%; background:white">
+        <tr>
+            <td rowspan="2" style="border:solid 1px black; text-align:center">
+                <b>Mots Clés déjà existant</b><br><br>
+                {% for showKey in showKeys %}
+                    {{ showKey.name }}
+                    <br>
+                {% endfor %}
+            </td>
+        </tr>
+    </table>
+    
     {{ form_end(addkeyForm) }}
     {% include 'footer.html.php' %}
 {% endblock %}
