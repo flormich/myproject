@@ -42,7 +42,7 @@
                 {% for users in user %}
                     <tr class="textShadow borderTableauUsers textTableauUsers">
                         <td class=" borderTrue" style="border: solid 1px black; text-align:center; height:50px; width:100px"><a class="textDecoration">{{ users.id }}</a></td>   
-                        <td class=" borderTrue" style="border: solid 1px black; text-align:center;">{{ users.pseudo }}</td>
+                        <td class=" borderTrue" style="border: solid 1px black; text-align:center;">{{ users.username }}</td>
                         <td class=" borderTrue" style="border: solid 1px black; text-align:center">{{ users.firstname }}</td>
                         <td class=" borderTrue" style="border: solid 1px black; text-align:center">{{ users.name }}</td>
                         <td class=" borderTrue" style="border: solid 1px black; text-align:center">{{ users.email }}</td>  
@@ -51,7 +51,7 @@
                         <td class=" borderTrue" style="border: solid 1px black; text-align:center">{{ users.role.name }}</td>  
                         <td class=" " style="border: solid 1px black; text-align:center"><img src="../assets/images/icons/pen.png" alt="Update" width="25%" title="Modification"></td>  
                         {% if users.email != userCourant %}
-                            <td class=" " style="border: solid 1px black; text-align:center"><a href="{{ path('delete_user', {'id':users.id}) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet article ?');"><img src="../assets/images/icons/trash.png" alt="Trash" width="25%" title="Suppression"></a></td>  
+                            <td class=" " style="border: solid 1px black; text-align:center"><a href="{{ path('delete_user', {'username':users.username}) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet article ?');"><img src="../assets/images/icons/trash.png" alt="Trash" width="25%" title="Suppression"></a></td>  
                         {% else %}
                             <td class=" " style="border: solid 1px black; text-align:center"></td>  
                         {% endif %}

@@ -1,7 +1,6 @@
 {% extends 'base.html.twig' %}
 
 {% block title %} Ajout article {% endblock %}
-{# {% block title %} {{ titreSite }} {% endblock %} #}
 
 {% block body_id %}app{% endblock %}
 
@@ -13,8 +12,6 @@
         {{ form_start(addArticleForm) }}
         {{ form_start(addThemeForm) }}
         {{ form_start(addPictureForm) }}
-        {# {{ form_row(form._token) }} #}
-        {# {{ form_row(form._token) }} #}
             <tr>
                 <td style="width:150px; height:20px; text-align:left">
                     {{ form_label(addArticleForm.title, 'Titre :') }}
@@ -22,9 +19,6 @@
                 <td style="width:170px; height:20px; text-align:left">
                     {{ form_errors(addArticleForm.title) }}
                     {{ form_widget(addArticleForm.title) }}
-                    {# {{ form_row(addArticleForm.title, {
-                        label: 'Titre : '
-                    })}} #}
                 </td>
             </tr>
             <tr>
@@ -46,15 +40,6 @@
                 </td>
             </tr>
 
-            {#<tr>
-                <td style="width:110px; height:20px; text-align:left">
-                    {{ form_label(addPictureForm.address, 'Adresse de l\'image :')}}
-                </td>
-                <td style="width:170px; height:20px; text-align:left">
-                    {{ form_errors(addPictureForm.address)}}
-                    {{ form_widget(addPictureForm.address)}}
-                </td>
-            </tr> #}
             <tr>
                 <td style="width:110px; height:20px; text-align:left">
                     {{ form_label(addArticleForm.picturesMain, 'Selectionnez photo principale :')}}
@@ -97,9 +82,7 @@
 
             {{ form_rest(addThemeForm) }}
             {{ form_rest(addArticleForm) }}
-            {# {{ form_rest(addPictureForm) }} #}
         {{ form_end(addThemeForm) }}
-        {# {{ form_end(addKeyForm) }} #}
         {{ form_end(addPictureForm) }}
         {{ form_end(addArticleForm) }}
     </table>

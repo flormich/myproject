@@ -10,7 +10,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=UsersRepository::class)
- * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
+ * @UniqueEntity(fields={"email"}, message="Un compte existe déjà avec ce mail")
  */
 class Users implements UserInterface
 {
@@ -43,7 +43,7 @@ class Users implements UserInterface
     private $isVerified = false;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=false)
      */
     private $username;
 
@@ -105,7 +105,6 @@ class Users implements UserInterface
     public function setEmail(string $email): self
     {
         $this->email = $email;
-
         return $this;
     }
 
@@ -116,7 +115,7 @@ class Users implements UserInterface
      */
     public function getUsername(): string
     {
-        return (string) $this->email;
+        return (string) $this->username;
     }
 
     public function setUsername(string $username): self
@@ -174,17 +173,17 @@ class Users implements UserInterface
         return $this;
     }
 
-    public function getPseudo(): ?string
-    {
-        return $this->username;
-    }
+    // public function getPseudo(): ?string
+    // {
+    //     return $this->username;
+    // }
 
-    public function setPseudo(?string $username): self
-    {
-        $this->username = $username;
+    // public function setPseudo(?string $username): self
+    // {
+    //     $this->username = $username;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
     public function getName(): ?string
     {

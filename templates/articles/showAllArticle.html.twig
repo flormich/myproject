@@ -13,7 +13,7 @@
         <center>
         <h3><b><u>Articles</u></b></h3>
         {% if not app.user %}
-            Erreur de chargement aller dans (ShowAllArticle.htlm.twig ligne 15)
+            {# Erreur de chargement aller dans (ShowAllArticle.htlm.twig ligne 15) #}
         {% else %}
             {% if (app.user.role.id == "1") %}
             <a href="{{ path('manage_articles') }}"> <input type="button" value="Mettre en liste"> </a>
@@ -48,10 +48,10 @@
                             </td>
                             <td style="width:50px"></td>
                         {% else %} #}
-                            <td style="border: 2px solid black; width:50rem; height:20rem; cursor:pointer; background:LightSteelBlue">
-                            {# <br> #}
-                            <h4><b>{{ article.title }}</b></h4>
-                            <br>
+                        <td style="border: 2px solid black; width:50rem; height:20rem; cursor:pointer; background:LightSteelBlue">
+                        {# <br> #}
+                        <h4><b>{{ article.title }}</b></h4>
+                        <br>
                             {% if not app.user %}
                                 {% else %}
                                     {% if (app.user.role.id == "1") %}
@@ -59,6 +59,7 @@
                                         <a href="{{ path('update_article', {'title':article.title}) }}" ><input type="button" value="Modifier" style="float:right; margin-right:10px"> </a>
                                         <br>                                
                                     {% else %}
+                                        {# <a href="{{ path('delete_article', {'title':article.title}) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet article ?');"><input type="button" value="Supprimer" style="float:right; margin-right:10px; background:Salmon	"> </a> #}
                                     {% endif %}
                             {% endif %}
                                 {# {{ mainPicture.name }} #}
@@ -73,15 +74,15 @@
                                     {# {% endif %} #}
                                 {# {% endfor %} #}
                                 {# <br> #}
-                                {% for mainPicture in mainPictures %}
-                                    {% if (mainPicture.article.id == article.id) %}
-                                        <br>
-                                        {# {{ mainPicture.mainpicture}} #}                                        
-                                        <img src="imagesLoaders/{{ mainPicture.address }}" style="width:90%" /><br>
-                                        <br>
-                                    {% endif %}
-                                {% endfor %}
-                            </td>     
+                            {% for mainPicture in mainPictures %}
+                                {% if (mainPicture.article.id == article.id) %}
+                                    <br>
+                                    {# {{ mainPicture.mainpicture}} #}                                        
+                                    <img src="imagesLoaders/{{ mainPicture.address }}" style="width:90%" /><br>
+                                    <br>
+                                {% endif %}
+                            {% endfor %}
+                        </td>     
                         {# {% endif %} #}
                     </tr> 
                     {% endfor %}                       

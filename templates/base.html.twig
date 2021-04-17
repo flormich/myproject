@@ -4,7 +4,8 @@
         <meta charset="UTF-8">
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.js"></script>
 
-        <title>{% block title %}Site de Maman{% endblock %}</title>
+        <title>{% block title %}FLEVALLIS{% endblock %}</title>
+       <link rel="shortcut icon" href="../assets/images/icons/Flevallis.ico">
         <base href="{{ asset('') }}">
 
         {% block stylesheets %}
@@ -45,8 +46,8 @@
                     <!-- Menu du haut droit -->
                     <nav class="mdl-navigation mdl-layout--large-screen-only" style="width:160px">
                         {% if not app.user %}
-                            <a class="menuLeft menuconnexion" style="text-align: center;" href="{{ path('app_register') }}"><img src="../assets/images/icons/login.png" width="20%" title="Register" text-align="center"></a>
-                            <a class="menuLeft menuconnexion" style="text-align: center;" href="{{ path('app_login') }}"><img src="../assets/images/icons/keys.png" width="50%" title="Connexion" text-align="center"></a>
+                            {# <a class="menuLeft menuconnexion" style="text-align: center;" href="{{ path('app_register') }}"><img src="../assets/images/icons/login.png" width="20%" title="Register" text-align="center"></a> #}
+                            <a class="menuLeft menuconnexion" style="text-align: center;" href="{{ path('app_login') }}"><img src="../assets/images/icons/keys.png" width="45%" title="Connexion" text-align="center"></a>
                         {% else %}
                             {# <a class="mdl-navigation__link bandoIconeStoreProduct" href="#"><img src="../assets/images/icones/shopping.png" width="40%" title="Calendrier" text-align="center"> </a> #}
                             <a class="bandoIconeStoreProduct" href="{{ path('app_home') }}" style="width=20%"> </a>
@@ -61,10 +62,10 @@
                     <span class="mdl-layout-title">
                     </span>
                     <nav class="mdl-navigation menuLeft">
-                        <a class="menuLeft" href="{{ path('show_all_article') }}"><img src="../assets/images/icons/news.png" width="20%" title=" Actualités" style='margin-left:10px'>&ensp;Actualités</a>
+                        <a class="menuLeft" href="{{ path('show_all_article') }}"><img src="../assets/images/icons/miniIcone/news.png" width="20%" title=" Actualités" style='margin-left:10px'>&ensp;Articles</a>
                         <hr color="blue" size="10px">
                         {% if not app.user %}
-                            <a class="menuLeft menuconnexion" href="{{ path('app_register') }}"><img src="../assets/images/icones/keys.png" width="20%" title="Register" style='margin-left:10px'>&ensp;Register</a>
+                            {# <a class="menuLeft menuconnexion" href="{{ path('app_register') }}"><img src="../assets/images/icones/keys.png" width="20%" title="Register" style='margin-left:10px'>&ensp;Register</a> #}
                         {% else %}
                             {# <a class="menuLeft" href="#"><img src="../assets/images/icones/shopping.png" width="40%" title="Calendrier" text-align="center">Calendrier</a> #}
                             {# <a class="menuLeft " href="readOrder"><img src="../assets/images/icones/shopping.png" width="20%" title="Commander">Commander</a> #}
@@ -85,12 +86,14 @@
                             {% else %}
                                 <a class="menuLeft menuviewusers" href="{{ path('view_user') }}"><img src="../assets/images/icons/folderUsers.png" width="15%" title="Gérer mon compte" style='margin-left:10px'>&ensp;Gérer mon compte</a>
 
-                                {{ dump(app.user) }}
+                                {# {{ dump(app.user) }}
                                 {{ dump(app.user.firstname)}}
+                                {{ dump(app.user.username)}}
+                                {{ dump(app.user.name)}}
                                 {{ dump(app.user.email)}}
                                 {{ dump(app.user.datecreate)}}
                                 {{ dump(app.user.role.name)}}
-                                Je suis user
+                                Je suis user #}
                             {% endif %}
                         {% endif %}                       
                     </nav>

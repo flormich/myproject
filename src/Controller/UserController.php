@@ -4,10 +4,14 @@ namespace App\Controller;
 
 use App\Entity\Users;
 
+use App\Form\RegistrationFormType;
+use App\Repository\UsersRepository;
+
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+
 
 // include __DIR__ . '/../../assets/variable.php';
 
@@ -19,7 +23,7 @@ class UserController extends AbstractController
     public function ReadUser(Request $request): Response
     {
         $currentUser = $this->getUser();
-        $user = $this->getDoctrine()->getManager()->getRepository(Users::class)->findOneBy(['email' => $currentUser->getEmail()]);
+        $user = $this->getDoctrine()->getManager()->getRepository(Users::class)->findOneBy(['username' => $currentUser->getUsername()]);
         // var_dump($currentUser);
         // var_dump($user);
 
@@ -75,9 +79,20 @@ class UserController extends AbstractController
     /**
      * @Route("/updateUser/{username}", name="update_user")
      */
-    public function UpdateUsers(Request $request): Response
+    public function UpdateUsers($username, Users $user, Request $request): Response
     {
-        exit ('Je suis dans le UserController -> UpdateUser');
+        $form = $this->createForm(RegistrationFormType::class, $user);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid())
+        {
+
+        }
+
+        return $this->render('users/updateUser.html.twig', [
+            'updateUser' => $form->createView(),
+        ]);
+        // exit ('Je suis dans updateUsers');
     }
 
     /**

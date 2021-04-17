@@ -73,8 +73,8 @@ class ArticleController extends AbstractController
         //Récupére les données Id pour le persisté dans la table Join
         $idTheme = $this->getDoctrine()->getManager()->getRepository(Themes::class)->findOneBy(array('name' => $theme->getName()));
 
-        $image = new Pictures();
-        $formPicture = $this->createForm(AddPictureFormType::class, $image);
+        $photos = new Pictures();
+        $formPicture = $this->createForm(AddPictureFormType::class, $photos);
         $formPicture->handleRequest($request);
 
         $articlesThemes = new ArticlesThemes();
@@ -90,39 +90,42 @@ class ArticleController extends AbstractController
             $mainImage = $formArticle->get('picturesMain')->getData();
             $images = $formArticle->get('pictures')->getData();
 
-            // Image principale
-            $fichierPrincipale = md5(uniqid()).'.'.$mainImage->guessExtension();
-            $mainImage->move(
-                $this->getParameter('images_directory'),
-                $fichierPrincipale
-            );
-            $mainPicture = new Pictures();
-                $mainPicture->setAddress($fichierPrincipale);
-                $mainPicture->setName($image);
-                $mainPicture->setArticle($article); 
-                $mainPicture->setMainPicture('1');
-                $entityManager = $this->getDoctrine()->getManager();
-                $entityManager->persist($mainPicture);
-                
-
-            // On boucle sur les images
-            foreach($images as $image){
-                // On génère un nouveau nom de fichier
-                $fichier = md5(uniqid()).'.'.$image->guessExtension();
-                              
-                // On copie le fichier dans le dossier uploads
-                $image->move(
+            if (isset($mainImage)){
+                // Image principale
+                $fichierPrincipale = md5(uniqid()).'.'.$mainImage->guessExtension();
+                $mainImage->move(
                     $this->getParameter('images_directory'),
-                    $fichier
+                    $fichierPrincipale
                 );
-                // On crée l'image dans la base de données
-                $picture = new Pictures();
-                $picture->setAddress($fichier);
-                $picture->setName('Name');
-                $picture->setArticle($article); 
-                $picture->setMainPicture('0');
-                $entityManager = $this->getDoctrine()->getManager();
-                $entityManager->persist($picture);
+                $mainPicture = new Pictures();
+                    $mainPicture->setAddress($fichierPrincipale);
+                    $mainPicture->setName($photos);
+                    $mainPicture->setArticle($article); 
+                    $mainPicture->setMainPicture('1');
+                    $entityManager = $this->getDoctrine()->getManager();
+                    $entityManager->persist($mainPicture);
+            }
+                
+            if (isset($images)){
+                // On boucle sur les images
+                foreach($images as $image){
+                    // On génère un nouveau nom de fichier
+                    $fichier = md5(uniqid()).'.'.$image->guessExtension();
+                                  
+                    // On copie le fichier dans le dossier uploads
+                    $image->move(
+                        $this->getParameter('images_directory'),
+                        $fichier
+                    );
+                    // On crée l'image dans la base de données
+                    $picture = new Pictures();
+                    $picture->setAddress($fichier);
+                    $picture->setName($photos);
+                    $picture->setArticle($article); 
+                    $picture->setMainPicture('0');
+                    $entityManager = $this->getDoctrine()->getManager();
+                    $entityManager->persist($picture);
+                }
             }
 
             $entityManager = $this->getDoctrine()->getManager();
@@ -257,7 +260,13 @@ class ArticleController extends AbstractController
         $form->handleRequest($request);
 
         $pictures = $this->getDoctrine()->getManager()->getRepository(Pictures::class)->findBy(['articles' => $article->getId()]);
-        $mainPictures = $pictures[0];
+        if (isset($pictures[0])){
+            $mainPictures = $pictures[0]->getAddress();
+        } else { 
+            $mainPictures = 'nophoto.jpg';
+        }
+
+        // $themes = $this->getDoctrine()->getManager()->getRepository(Themes::class)->findAll();
 
         if($form->isSubmitted() && $form->isValid())
         {
@@ -265,39 +274,43 @@ class ArticleController extends AbstractController
             $mainImage = $form->get('picturesMain')->getData();
             $images = $form->get('pictures')->getData();
 
-            // Image principale
-            $fichierPrincipale = md5(uniqid()).'.'.$mainImage->guessExtension();
-            $mainImage->move(
-                $this->getParameter('images_directory'),
-                $fichierPrincipale
-            );
-            $mainPicture = new Pictures();
-                $mainPicture->setAddress($fichierPrincipale);
-                $mainPicture->setName('Name');
-                $mainPicture->setArticle($article); 
-                $mainPicture->setMainPicture('1');
-                $entityManager = $this->getDoctrine()->getManager();
-                $entityManager->persist($mainPicture);
-                
-
-            // On boucle sur les images
-            foreach($images as $image){
-                // On génère un nouveau nom de fichier
-                $fichier = md5(uniqid()).'.'.$image->guessExtension();
-                              
-                // On copie le fichier dans le dossier uploads
-                $image->move(
+            if(isset($mainImage)){
+                // Image principale
+                $fichierPrincipale = md5(uniqid()).'.'.$mainImage->guessExtension();
+                $mainImage->move(
                     $this->getParameter('images_directory'),
-                    $fichier
+                    $fichierPrincipale
                 );
-                // On crée l'image dans la base de données
-                $picture = new Pictures();
-                $picture->setAddress($fichier);
-                $picture->setName('Name');
-                $picture->setArticle($article); 
-                $picture->setMainPicture('0');
-                $entityManager = $this->getDoctrine()->getManager();
-                $entityManager->persist($picture);
+                $mainPicture = new Pictures();
+                    $entityManager = $this->getDoctrine()->getManager();
+                    // $entityManager->remove($mainPicture);
+                    $mainPicture->setAddress($fichierPrincipale);
+                    $mainPicture->setName('Name');
+                    $mainPicture->setArticle($article); 
+                    $mainPicture->setMainPicture('1');
+                    $entityManager->persist($mainPicture);
+            }
+                
+            if(isset($images)){
+                // On boucle sur les images
+                foreach($images as $image){
+                    // On génère un nouveau nom de fichier
+                    $fichier = md5(uniqid()).'.'.$image->guessExtension();
+                                  
+                    // On copie le fichier dans le dossier uploads
+                    $image->move(
+                        $this->getParameter('images_directory'),
+                        $fichier
+                    );
+                    // On crée l'image dans la base de données
+                    $picture = new Pictures();
+                    $picture->setAddress($fichier);
+                    $picture->setName('Name');
+                    $picture->setArticle($article); 
+                    $picture->setMainPicture('0');
+                    $entityManager = $this->getDoctrine()->getManager();
+                    $entityManager->persist($picture);
+                }
             }
 
             $article->setDateUpdate(new \DateTime('now', new \DateTimeZone('Europe/Paris')));
@@ -312,6 +325,7 @@ class ArticleController extends AbstractController
             'updateArticleForm' => $form->createView(),
             'pictures' => $pictures,
             'mainPictures' => $mainPictures,
+            // 'themes' => $themes,
         ]);
     }
 

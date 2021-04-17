@@ -57,13 +57,15 @@
                         {% for theme in article.articlesThemes %}
                             <td class=" borderTrue" style="border: solid 1px black; text-align:center;">{{ theme.themes }}</td>
                         {% endfor %}
+                        <td class=" borderTrue" style="border: solid 1px black; text-align:center;">
                         {% for picture in pictures %}
                             {% if picture.article.id == article.id %}
                                 {% if picture.mainPicture == 1 %}
-                                    <td class=" borderTrue" style="border: solid 1px black; text-align:center;"><img src="imagesLoaders/{{ picture.address }}" style="width:25%; padding-top:4px; padding-bottom:4px" /></td>
+                                    <img src="imagesLoaders/{{ picture.address }}" style="width:25%; padding-top:4px; padding-bottom:4px" />
                                 {% endif %}
                             {% endif %}
                         {% endfor %}
+                        </td>
                         <td class=" " style="border: solid 1px black; text-align:center"><a href="{{ path('update_article', {'title':article.title}) }}"><img src="../assets/images/icons/pen.png" alt="Update" width="45%" title="Modification"></a></td>  
                         <td class=" " style="border: solid 1px black; text-align:center"><a href="{{ path('delete_article', {'title':article.title}) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet article ?');"><img src="../assets/images/icons/trash.png" alt="Trash" width="45%" title="Suppression"></a></td>  
                     </tr>

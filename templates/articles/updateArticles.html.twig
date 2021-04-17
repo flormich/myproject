@@ -1,8 +1,5 @@
 {% extends 'base.html.twig' %}
 
-{# {% block title %} Modfier article {% endblock %} #}
-{# {% block title %} {{ titreSite }} {% endblock %} #}
-
 {% block body_id %}app{% endblock %}
 
 {% block main %}
@@ -19,20 +16,14 @@
             <td style="width:15%; height:20px; text-align:left">
                 {{ form_errors(updateArticleForm.title) }}
                 {{ form_widget(updateArticleForm.title) }}
-                {# {{ form_row(updateArticleForm.title, {
-                    label: 'Titre : '
-                })}} #}
             </td>
-                {# <div class="input">
-                {{ form_row(updateArticleForm.title, {
-                    label: 'Titre : '
-                })}}
-                </div> #}
             <td style="width:45%;" rowspan="4">
                 <b>Photo principale de l'article</b><br><br>
-                <img src="imagesLoaders/{{ mainPictures.address }}" style="width:65%"/>            
+                {# <img src="imagesLoaders/{{ mainPictures.address }}" style="width:65%"/>             #}
+                <img src="imagesLoaders/{{ mainPictures }}" style="width:65%"/>            
             </td>
         </tr>
+
         <tr>
             <td style="height:20px; text-align:left">
                 {{ form_label(updateArticleForm.description, 'Description :') }}
@@ -40,11 +31,19 @@
             <td style="height:20px; text-align:left">
                 {{ form_errors(updateArticleForm.description) }}
                 {{ form_widget(updateArticleForm.description) }}
-                {# {{ form_row(updateArticleForm.description, {
-                    label: 'Titre : '
-                })}} #}
             </td>
         </tr>
+
+        {# <tr>
+            <td style="height:20px; text-align:left">
+                {{ form_label(updateArticleForm.description, 'Description :') }}
+            </td>
+            <td style="height:20px; text-align:left">
+                {{ form_errors(updateArticleForm.description) }}
+                {{ form_widget(updateArticleForm.description) }}
+            </td>
+        </tr> #}
+
         <tr>
             <td style="height:20px; text-align:left">
                 {{ form_label(updateArticleForm.picturesMain, 'picturesMain :') }}
@@ -52,22 +51,9 @@
             <td style="height:20px; text-align:left">
                 {{ form_errors(updateArticleForm.picturesMain) }}
                 {{ form_widget(updateArticleForm.picturesMain) }}
-                {# {{ form_row(updateArticleForm.description, {
-                    label: 'Titre : '
-                })}} #}
             </td>
-        {# {{ form_row(updateArticleForm.picture, {
-            label: 'Photos :'
-        })}} #}
-        {# {{ form_row(addArticleForm.themes, {
-            label: 'Themes :',
-            value: 'name',
-        })}}
-        {{ form_row(addArticleForm.keyWords, {
-            label: 'Keys : ',
-            value: 'name',
-        })}} #}
         </tr>
+
         <tr>
             <td style="height:20px; text-align:left">
                 {{ form_label(updateArticleForm.pictures, 'pictures :') }}
@@ -75,9 +61,6 @@
             <td style="height:20px; text-align:left">
                 {{ form_errors(updateArticleForm.pictures) }}
                 {{ form_widget(updateArticleForm.pictures) }}
-                {# {{ form_row(updateArticleForm.description, {
-                    label: 'Titre : '
-                })}} #}
             </td>
         </tr>
         <br>

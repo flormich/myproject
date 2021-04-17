@@ -14,7 +14,7 @@
         {% if not app.user %}
         {% else %}
             {% if (app.user.role.id == "1") %}
-                <a href="{{ path('update_article', {'title':article.title}) }}"><input type="button" value="Modifier"> </a>&emsp;
+                {# <a href="{{ path('update_article', {'title':article.title}) }}"><input type="button" value="Modifier"> </a>&emsp; #}
                 <a href="{{ path('delete_article', {'title':article.title}) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet article ?');"><input type="button" value="Supprimer"> </a>
                 <br><br>
             {% else %}
@@ -64,8 +64,8 @@
                     </tr>
                     {# Descripton #}
                     <tr class="textShadow borderTableauUsers textTableauUsers" style="text-align:center; vertical-align: top;">
-                        <td rowspan="2" class=" borderTrue" style="height:30%; border-bottom: 1px solid black; border-collapse:collapse;">
-                            {{ article.Description }}
+                        <td rowspan="4" class=" borderTrue" style="height:30%; border-bottom: 1px solid black; border-collapse:collapse; padding-top:15px; text-align:left; padding-left:25px; padding-right:25px">
+                            {{ article.Description|nl2br }}
                         </td>
                     </tr>
                     {# Petite photos #}
@@ -78,14 +78,6 @@
                                     <a href="javascript:popup('imagesLoaders/{{ outputs2 }}')"><img src="imagesLoaders/{{ outputs2 }}" style="width:70%" />                       
                                 {% endif %}
                             <br><br>
-                            {# {% for picture in pictures %}
-                                {% if ( picture.article.id == article.id ) %}
-                                    {{ picture.name }}
-                                {% else %}
-                                    {# <img src="{{ asset('images/icons/'~entity.nom|e) }}" alt="" /> #}
-                                    {# <img src="../assets/images/icons/noPhoto.png" alt="Pas d'image" /> #}
-                                {# {% endif %} #}
-                            {# {% endfor %} #}
                         </td>
                         <td style="width:17%; border: 1px solid black; border-collapse:collapse;">
                             <br>
@@ -109,11 +101,11 @@
                     {# liens + Keywords #}
                     <tr class="textShadow borderTableauUsers textTableauUsers" style="text-align:center">
                         {# <td class=" borderTrue" style="height:50px">Liens matériel utilisé :<br> #}
-                        <td style="border: 1px solid black; border-collapse:collapse;"></td>
+                        {# <td style="border: 1px solid black; border-collapse:collapse;"></td> #}
                         <td colspan="3" class="borderTrue" style="font-weight:bold; height:5%; border: 1px solid black; border-collapse:collapse;">Mots clé :</td>
                     </tr>
                     <tr>
-                        <td></td>
+                        {# <td></td> #}
                         <td colspan="3" class="borderTrue" style="height:10%; border: 1px solid black; border-collapse:collapse;">
                             {% for keyWord in article.keyWords %}
                                 {{ keyWord.name }} /

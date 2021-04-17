@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block body_id %}app{% endblock %}
+
+{% block main %}
+    {% include 'baseOpen.html.php' %}
+    <center>
+    <h1>Modifier mon compte</h1>
+
+    <table style="width:50%; text-align:center; margin:auto">
+        {{ form_start(updateUser)}}
+        <tr>
+            <td style="width:15%; height:20px; text-align:left">
+                {{ form_label(updateUser.username, 'UserName :') }}
+            </td>
+            <td style="width:15%; height:20px; text-align:left">
+                {{ form_errors(updateUser.username) }}
+                {{ form_widget(updateUser.username) }}
+            </td>
+        </tr>
+        <tr>
+            <td style="height:20px; text-align:left">
+                {{ form_label(updateUser.firstname, 'Prénom :') }}
+            </td>
+            <td style="height:20px; text-align:left">
+                {{ form_errors(updateUser.firstname) }}
+                {{ form_widget(updateUser.firstname) }}
+            </td>
+        </tr>
+        <tr>
+            <td style="height:20px; text-align:left">
+                {{ form_label(updateUser.name, 'Nom :') }}
+            </td>
+            <td style="height:20px; text-align:left">
+                {{ form_errors(updateUser.name) }}
+                {{ form_widget(updateUser.name) }}
+            </td>        
+        </tr>
+        <tr>
+            <td style="height:20px; text-align:left">
+                {{ form_label(updateUser.email, 'Email :') }}
+            </td>
+            <td style="height:20px; text-align:left">
+                {{ form_errors(updateUser.email) }}
+                {{ form_widget(updateUser.email) }}
+            </td>
+        </tr>
+        <tr style="height:15px"></tr>
+        <tr>
+            {# <td>{{ form_row(updateUser.password) }}</td> #}
+            <td style="height:20px; text-align:left">
+                {{ form_label(updateUser.password, 'Password :') }}
+            </td>
+            <td style="height:20px; text-align:left">
+                {{ form_errors(updateUser.password) }}
+                {{ form_widget(updateUser.password) }}
+            </td>
+        </tr>
+    </table>
+    <br>
+    <button class="btn" type="submit">Enregistrer</button>
+    {{ form_end(updateUser) }}
+    {% include 'footer.html.php' %}
+{% endblock %}
